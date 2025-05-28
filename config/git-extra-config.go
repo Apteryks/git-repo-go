@@ -6,8 +6,8 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"github.com/alibaba/git-repo-go/file"
-	"github.com/alibaba/git-repo-go/path"
+	"github.com/Apteryks/git-repo-go/file"
+	"github.com/Apteryks/git-repo-go/path"
 	"github.com/jiangxin/goconfig"
 	log "github.com/jiangxin/multi-log"
 )

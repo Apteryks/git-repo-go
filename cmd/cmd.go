@@ -21,8 +21,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/alibaba/git-repo-go/config"
-	"github.com/alibaba/git-repo-go/workspace"
+	"github.com/Apteryks/git-repo-go/config"
+	"github.com/Apteryks/git-repo-go/workspace"
 	log "github.com/jiangxin/multi-log"
 )
 

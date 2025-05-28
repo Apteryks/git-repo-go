@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/alibaba/git-repo-go/common"
-	"github.com/alibaba/git-repo-go/config"
+	"github.com/Apteryks/git-repo-go/common"
+	"github.com/Apteryks/git-repo-go/config"
 	log "github.com/jiangxin/multi-log"
 	"github.com/go-git/go-git/v5/plumbing"
 )

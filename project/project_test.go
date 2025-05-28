@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/alibaba/git-repo-go/manifest"
+	"github.com/Apteryks/git-repo-go/manifest"
 	"github.com/stretchr/testify/assert"
 )
 

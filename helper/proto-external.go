@@ -22,7 +22,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/alibaba/git-repo-go/config"
+	"github.com/Apteryks/git-repo-go/config"
 )
 
 // ExternalProtoHelper implements helper for unknown remote service.

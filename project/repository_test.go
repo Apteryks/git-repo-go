@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/alibaba/git-repo-go/manifest"
+	"github.com/Apteryks/git-repo-go/manifest"
 	"github.com/stretchr/testify/assert"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing/object"

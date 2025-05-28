@@ -1,4 +1,4 @@
-module github.com/alibaba/git-repo-go
+module github.com/Apteryks/git-repo-go
 
 go 1.23.0
 

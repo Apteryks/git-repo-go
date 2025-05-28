@@ -20,10 +20,10 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/alibaba/git-repo-go/cap"
-	"github.com/alibaba/git-repo-go/config"
-	"github.com/alibaba/git-repo-go/encode"
-	"github.com/alibaba/git-repo-go/version"
+	"github.com/Apteryks/git-repo-go/cap"
+	"github.com/Apteryks/git-repo-go/config"
+	"github.com/Apteryks/git-repo-go/encode"
+	"github.com/Apteryks/git-repo-go/version"
 	log "github.com/jiangxin/multi-log"
 )
 

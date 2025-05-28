@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/alibaba/git-repo-go/path"
+	"github.com/Apteryks/git-repo-go/path"
 	"github.com/jiangxin/goconfig"
 	"github.com/jiangxin/multi-log"
 )

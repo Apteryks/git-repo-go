@@ -1,4 +1,4 @@
-[![Build Status](https://github.com/alibaba/git-repo-go/actions/workflows/go.yml/badge.svg)](https://github.com/alibaba/git-repo-go/actions/workflows/go.yml)
+[![Build Status](https://github.com/Apteryks/git-repo-go/actions/workflows/go.yml/badge.svg)](https://github.com/alibaba/git-repo-go/actions/workflows/go.yml)
 
 ## git-repo
 

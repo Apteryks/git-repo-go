@@ -16,8 +16,8 @@
 package workspace
 
 import (
-	"github.com/alibaba/git-repo-go/config"
-	"github.com/alibaba/git-repo-go/project"
+	"github.com/Apteryks/git-repo-go/config"
+	"github.com/Apteryks/git-repo-go/project"
 	log "github.com/jiangxin/multi-log"
 )
 

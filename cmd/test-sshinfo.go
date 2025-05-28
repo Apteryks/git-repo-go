@@ -17,7 +17,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/alibaba/git-repo-go/helper"
+	"github.com/Apteryks/git-repo-go/helper"
 	"github.com/spf13/cobra"
 )
 

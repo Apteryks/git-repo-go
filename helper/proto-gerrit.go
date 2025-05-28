@@ -20,7 +20,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/alibaba/git-repo-go/config"
+	"github.com/Apteryks/git-repo-go/config"
 	log "github.com/jiangxin/multi-log"
 )
 

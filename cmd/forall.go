@@ -20,10 +20,10 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/alibaba/git-repo-go/color"
-	"github.com/alibaba/git-repo-go/path"
-	"github.com/alibaba/git-repo-go/project"
-	"github.com/alibaba/git-repo-go/workspace"
+	"github.com/Apteryks/git-repo-go/color"
+	"github.com/Apteryks/git-repo-go/path"
+	"github.com/Apteryks/git-repo-go/project"
+	"github.com/Apteryks/git-repo-go/workspace"
 	log "github.com/jiangxin/multi-log"
 	"github.com/spf13/cobra"
 )

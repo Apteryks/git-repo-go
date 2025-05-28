@@ -24,8 +24,8 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/alibaba/git-repo-go/config"
-	"github.com/alibaba/git-repo-go/path"
+	"github.com/Apteryks/git-repo-go/config"
+	"github.com/Apteryks/git-repo-go/path"
 	"github.com/jiangxin/goconfig"
 	log "github.com/jiangxin/multi-log"
 )

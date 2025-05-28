@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/alibaba/git-repo-go/path"
+	"github.com/Apteryks/git-repo-go/path"
 )
 
 const (

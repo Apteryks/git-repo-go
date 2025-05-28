@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/alibaba/git-repo-go/config"
+	"github.com/Apteryks/git-repo-go/config"
 )
 
 // URLJoin appends fetch path (in remote element) and project name to manifest url.

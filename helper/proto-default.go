@@ -17,7 +17,7 @@ package helper
 import (
 	"errors"
 
-	"github.com/alibaba/git-repo-go/config"
+	"github.com/Apteryks/git-repo-go/config"
 )
 
 // DefaultProtoHelper implements helper for unknown remote service.

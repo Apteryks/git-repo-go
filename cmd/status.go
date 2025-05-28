@@ -19,10 +19,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/alibaba/git-repo-go/color"
-	"github.com/alibaba/git-repo-go/config"
-	"github.com/alibaba/git-repo-go/path"
-	"github.com/alibaba/git-repo-go/project"
+	"github.com/Apteryks/git-repo-go/color"
+	"github.com/Apteryks/git-repo-go/config"
+	"github.com/Apteryks/git-repo-go/path"
+	"github.com/Apteryks/git-repo-go/project"
 	log "github.com/jiangxin/multi-log"
 	"github.com/spf13/cobra"
 )

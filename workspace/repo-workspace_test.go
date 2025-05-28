@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/alibaba/git-repo-go/config"
-	"github.com/alibaba/git-repo-go/errors"
-	"github.com/alibaba/git-repo-go/project"
+	"github.com/Apteryks/git-repo-go/config"
+	"github.com/Apteryks/git-repo-go/errors"
+	"github.com/Apteryks/git-repo-go/project"
 	"github.com/stretchr/testify/assert"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing/object"

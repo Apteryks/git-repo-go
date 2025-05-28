@@ -4,7 +4,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/alibaba/git-repo-go/config"
+	"github.com/Apteryks/git-repo-go/config"
 )
 
 // IsSha indecates revision is a commit id (hash).

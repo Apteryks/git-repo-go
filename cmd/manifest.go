@@ -18,8 +18,8 @@ import (
 	"io"
 	"os"
 
-	"github.com/alibaba/git-repo-go/file"
-	"github.com/alibaba/git-repo-go/manifest"
+	"github.com/Apteryks/git-repo-go/file"
+	"github.com/Apteryks/git-repo-go/manifest"
 	log "github.com/jiangxin/multi-log"
 	"github.com/spf13/cobra"
 )

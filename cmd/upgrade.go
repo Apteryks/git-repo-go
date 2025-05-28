@@ -38,12 +38,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/alibaba/git-repo-go/cap"
-	"github.com/alibaba/git-repo-go/config"
-	"github.com/alibaba/git-repo-go/file"
-	"github.com/alibaba/git-repo-go/format"
-	"github.com/alibaba/git-repo-go/helper"
-	"github.com/alibaba/git-repo-go/version"
+	"github.com/Apteryks/git-repo-go/cap"
+	"github.com/Apteryks/git-repo-go/config"
+	"github.com/Apteryks/git-repo-go/file"
+	"github.com/Apteryks/git-repo-go/format"
+	"github.com/Apteryks/git-repo-go/helper"
+	"github.com/Apteryks/git-repo-go/version"
 	log "github.com/jiangxin/multi-log"
 	"github.com/spf13/cobra"
 	"golang.org/x/crypto/openpgp"
@@ -54,7 +54,7 @@ const (
 	// defaultUpgradeInfoURL is where to download version.yml from.
 	defaultUpgradeInfoURL = "http://git-repo.info/download/version.yml"
 	// defaultDownloadURL is where to download package file.
-	defaultDownloadURL = "https://github.com/alibaba/git-repo-go/releases/download/v<version>/git-repo-<version>-<os>-<arch>.<ext>"
+	defaultDownloadURL = "https://github.com/Apteryks/git-repo-go/releases/download/v<version>/git-repo-<version>-<os>-<arch>.<ext>"
 )
 
 type upgradeCommand struct {

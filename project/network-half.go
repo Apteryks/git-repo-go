@@ -6,9 +6,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/alibaba/git-repo-go/common"
-	"github.com/alibaba/git-repo-go/file"
-	"github.com/alibaba/git-repo-go/path"
+	"github.com/Apteryks/git-repo-go/common"
+	"github.com/Apteryks/git-repo-go/file"
+	"github.com/Apteryks/git-repo-go/path"
 	log "github.com/jiangxin/multi-log"
 )
 

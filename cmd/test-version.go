@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/alibaba/git-repo-go/version"
+	"github.com/Apteryks/git-repo-go/version"
 	"github.com/spf13/cobra"
 )
 
