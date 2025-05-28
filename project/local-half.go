@@ -387,11 +387,14 @@ func (v Project) InstallGerritHooks() error {
 		return nil
 	}
 
-	// Hooks dir of work repository maybe a symlink to object repository
+	// Hooks dir of work repository may be a symlink to object repository
 	localHooksDir := filepath.Join(v.CommonDir(), "hooks")
 	if p, err := filepath.EvalSymlinks(localHooksDir); err == nil {
 		localHooksDir = p
 	}
+	// Guard against a nonexistent .git/hooks directory.
+	os.MkdirAll(localHooksDir, 0755)
+
 	log.Debugf("installing gerrit hooks for %s", v.Path)
 	for name := range config.GerritHooks {
 		src := filepath.Join(hooksDir, name)
