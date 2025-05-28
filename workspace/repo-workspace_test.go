@@ -12,8 +12,8 @@ import (
 	"github.com/alibaba/git-repo-go/errors"
 	"github.com/alibaba/git-repo-go/project"
 	"github.com/stretchr/testify/assert"
-	"gopkg.in/src-d/go-git.v4"
-	"gopkg.in/src-d/go-git.v4/plumbing/object"
+	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/plumbing/object"
 )
 
 func testCreateManifests(topDir, manifestURL string) error {

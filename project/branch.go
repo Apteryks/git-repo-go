@@ -7,7 +7,7 @@ import (
 	"github.com/alibaba/git-repo-go/common"
 	"github.com/alibaba/git-repo-go/config"
 	log "github.com/jiangxin/multi-log"
-	"gopkg.in/src-d/go-git.v4/plumbing"
+	"github.com/go-git/go-git/v5/plumbing"
 )
 
 // Branch wraps branch name and object ID.
