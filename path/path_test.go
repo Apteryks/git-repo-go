@@ -2,7 +2,6 @@ package path
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -22,7 +21,7 @@ func TestExpendHome(t *testing.T) {
 		assert = assert.New(t)
 	)
 
-	tmpdir, err = ioutil.TempDir("", "goconfig")
+	tmpdir, err = os.MkdirTemp("", "goconfig")
 	if err != nil {
 		panic(err)
 	}
@@ -105,7 +104,7 @@ func TestAbs(t *testing.T) {
 		assert = assert.New(t)
 	)
 
-	tmpdir, err = ioutil.TempDir("", "goconfig")
+	tmpdir, err = os.MkdirTemp("", "goconfig")
 	if err != nil {
 		panic(err)
 	}
@@ -182,7 +181,7 @@ func TestAbsJoin(t *testing.T) {
 		assert = assert.New(t)
 	)
 
-	tmpdir, err = ioutil.TempDir("", "goconfig")
+	tmpdir, err = os.MkdirTemp("", "goconfig")
 	if err != nil {
 		panic(err)
 	}
@@ -259,7 +258,7 @@ func TestFindGitWorkSpace(t *testing.T) {
 		assert   = assert.New(t)
 	)
 
-	tmpdir, err := ioutil.TempDir("", "goconfig")
+	tmpdir, err := os.MkdirTemp("", "goconfig")
 	if err != nil {
 		panic(err)
 	}
@@ -288,7 +287,7 @@ func TestFindGitWorkSpace(t *testing.T) {
 	repo2 := filepath.Join(tmpdir, "repo2")
 	err = os.MkdirAll(filepath.Join(repo2, "a", "b"), 0755)
 	assert.Nil(err)
-	err = ioutil.WriteFile(filepath.Join(repo2, ".git"),
+	err = os.WriteFile(filepath.Join(repo2, ".git"),
 		[]byte("gitdir: ../bare.git"),
 		0644)
 	assert.Nil(err)
@@ -300,7 +299,7 @@ func TestFindGitWorkSpace(t *testing.T) {
 	assert.Equal(repo2, worktree)
 
 	// create bad gitdir file: repo2.git
-	err = ioutil.WriteFile(filepath.Join(repo2, ".git"),
+	err = os.WriteFile(filepath.Join(repo2, ".git"),
 		[]byte("../bare.git"),
 		0644)
 	assert.Nil(err)
@@ -355,7 +354,7 @@ func TestFindTopDir(t *testing.T) {
 		err    error
 	)
 
-	tmpdir, err = ioutil.TempDir("", "git-repo")
+	tmpdir, err = os.MkdirTemp("", "git-repo")
 	if err != nil {
 		panic(err)
 	}

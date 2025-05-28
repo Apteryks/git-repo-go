@@ -16,7 +16,7 @@ package cmd
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -76,7 +76,7 @@ type uploadOptions struct {
 
 // LoadFromFile reads content from file and parses into push options.
 func (v *uploadOptions) LoadFromFile(file string) {
-	data, err := ioutil.ReadFile(file)
+	data, err := os.ReadFile(file)
 	if err != nil {
 		return
 	}
@@ -633,7 +633,7 @@ func (v uploadCommand) UploadForReviewWithEditor(branchesMap map[string][]projec
 	if v.O.MockEditScript != "" {
 		f, err := os.Open(v.O.MockEditScript)
 		if err == nil {
-			buf, err := ioutil.ReadAll(f)
+			buf, err := io.ReadAll(f)
 			if err == nil {
 				editString = string(buf)
 			}
@@ -717,7 +717,7 @@ func (v uploadCommand) saveUploadOptions(optionsFile string, o uploadOptions) er
 
 	lockFile := optionsFile + ".lock"
 	data := strings.Join(o.Export(false), "\n")
-	err := ioutil.WriteFile(lockFile, []byte(data), 0644)
+	err := os.WriteFile(lockFile, []byte(data), 0644)
 	if err != nil {
 		return err
 	}
@@ -786,7 +786,7 @@ func (v uploadCommand) fmtUploadOptionsScript(optionsFile string, published bool
 		}
 	}
 
-	buf, err := ioutil.ReadFile(optionsFile)
+	buf, err := os.ReadFile(optionsFile)
 	if err == nil {
 		o.LoadFromText(string(buf))
 

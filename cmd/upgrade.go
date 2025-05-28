@@ -27,7 +27,6 @@ import (
 	"fmt"
 	"hash"
 	"io"
-	"io/ioutil"
 	"net"
 	"net/http"
 	"net/url"
@@ -616,7 +615,7 @@ func (v upgradeCommand) UpgradeVersion(target string, info *upgradeInfo) error {
 		newVersion  = info.Version(!v.O.Test)
 	)
 
-	tmpDir, err := ioutil.TempDir("", "git-repo-")
+	tmpDir, err := os.MkdirTemp("", "git-repo-")
 	if err != nil {
 		return err
 	}
@@ -684,7 +683,7 @@ func (v upgradeCommand) InstallImage(bin, target string) error {
 	if err != nil {
 		log.Debugf("no permission to write file '%s', will write to tmpfile instead",
 			lockFile)
-		tmpDir, err := ioutil.TempDir("", "git-repo-")
+		tmpDir, err := os.MkdirTemp("", "git-repo-go")
 		if err != nil {
 			return err
 		}

@@ -2,7 +2,7 @@ package format
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"testing"
 
@@ -29,7 +29,7 @@ func TestMsgBox(t *testing.T) {
 		msgBox.Draw(pW)
 		pW.Close()
 	}()
-	buf, err := ioutil.ReadAll(pR)
+	buf, err := io.ReadAll(pR)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, string(buf))
 }
@@ -56,7 +56,7 @@ func TestMsgBoxLong(t *testing.T) {
 		msgBox.Draw(pW)
 		pW.Close()
 	}()
-	buf, err := ioutil.ReadAll(pR)
+	buf, err := io.ReadAll(pR)
 	assert.Equal(t, nil, err)
 	assert.Equal(t, expected, string(buf))
 }

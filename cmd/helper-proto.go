@@ -16,7 +16,7 @@ package cmd
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"strings"
 
@@ -90,7 +90,7 @@ func (v *helperProtoCommand) Execute(arts []string) error {
 		var (
 			id, patch string
 		)
-		buf, err = ioutil.ReadAll(os.Stdin)
+		buf, err = io.ReadAll(os.Stdin)
 		if err != nil {
 			return err
 		}

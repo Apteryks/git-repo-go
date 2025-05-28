@@ -1,7 +1,6 @@
 package project
 
 import (
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
@@ -20,7 +19,7 @@ func TestRepositoryInit(t *testing.T) {
 
 	assert := assert.New(t)
 
-	tmpdir, err := ioutil.TempDir("", "git-repo-")
+	tmpdir, err := os.MkdirTemp("", "git-repo-")
 	if err != nil {
 		panic(err)
 	}
@@ -84,7 +83,7 @@ func TestRepositoryIsUnborn(t *testing.T) {
 
 	assert := assert.New(t)
 
-	tmpdir, err := ioutil.TempDir("", "git-repo-")
+	tmpdir, err := os.MkdirTemp("", "git-repo-")
 	if err != nil {
 		panic(err)
 	}
@@ -113,7 +112,7 @@ func TestRepositoryFetch(t *testing.T) {
 
 	assert := assert.New(t)
 
-	tmpdir, err := ioutil.TempDir("", "git-repo-")
+	tmpdir, err := os.MkdirTemp("", "git-repo-")
 	if err != nil {
 		panic(err)
 	}
@@ -134,7 +133,7 @@ func TestRepositoryFetch(t *testing.T) {
 
 	// Create a commit in workdir
 	filename := filepath.Join(workDir, "example-git-file")
-	err = ioutil.WriteFile(filename, []byte("hello world!"), 0644)
+	err = os.WriteFile(filename, []byte("hello world!"), 0644)
 	assert.Nil(err)
 
 	_, err = w.Add("example-git-file")
@@ -173,7 +172,7 @@ func TestRepositoryFetch(t *testing.T) {
 	assert.Nil(err)
 
 	// Push commit in workdir to ref.git
-	err = ioutil.WriteFile(filename, []byte("hello world!\nBye\n"), 0644)
+	err = os.WriteFile(filename, []byte("hello world!\nBye\n"), 0644)
 	assert.Nil(err)
 
 	_, err = w.Add("example-git-file")

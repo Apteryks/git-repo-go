@@ -19,7 +19,6 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -586,7 +585,7 @@ func unmarshalFile(file string) (*Manifest, error) {
 		return nil, err
 	}
 
-	buf, err := ioutil.ReadFile(file)
+	buf, err := os.ReadFile(file)
 	if err != nil {
 		return nil, fmt.Errorf("cannot read manifest file '%s': %s", file, err)
 	}

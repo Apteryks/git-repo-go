@@ -17,7 +17,7 @@ package editor
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"os/exec"
 	"regexp"
@@ -144,7 +144,7 @@ func EditString(data string) string {
 		return data
 	}
 
-	tmpfile, err := ioutil.TempFile("", "go-repo-edit-*")
+	tmpfile, err := os.CreateTemp("", "go-repo-edit-*")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -177,7 +177,7 @@ func EditString(data string) string {
 		log.Fatal(err)
 	}
 
-	buf, err := ioutil.ReadAll(f)
+	buf, err := io.ReadAll(f)
 	if err != nil {
 		log.Fatal(err)
 	}

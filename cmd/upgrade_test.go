@@ -3,7 +3,6 @@ package cmd
 import (
 	"encoding/base64"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -169,7 +168,7 @@ qUDzwGflENTCedt+7lz7oLhAk3Oor0Gxk95u43ki9REJMIkS68CXDfe3t4GKUrKa
 		assert = assert.New(t)
 	)
 
-	binFile, err := ioutil.TempFile("", "test-git-repo.-")
+	binFile, err := os.CreateTemp("", "test-git-repo.-")
 	if err != nil {
 		t.Fatalf("fail to create binfile: %s", err)
 	}
@@ -229,13 +228,13 @@ func TestDownload(t *testing.T) {
 		Reply(200).
 		AddHeader("Content-Length", strconv.Itoa(len(data))).
 		BodyString(data)
-	dir, err := ioutil.TempDir("", "git-repo-test-")
+	dir, err := os.MkdirTemp("", "git-repo-test-")
 	if assert.Nil(err) {
 		defer os.RemoveAll(dir)
 		file, err = cmd.Download("http://example.com/download/filename", dir, false)
 		assert.Nil(err)
 		if assert.True(file != "") {
-			buf, err := ioutil.ReadFile(file)
+			buf, err := os.ReadFile(file)
 			if assert.Nil(err) {
 				assert.Equal([]byte(data), buf)
 			}
@@ -257,17 +256,17 @@ func TestExtract(t *testing.T) {
 
 	cmd := upgradeCommand{}
 	for key, buf := range data {
-		dir, err := ioutil.TempDir("", "git-repo-test")
+		dir, err := os.MkdirTemp("", "git-repo-test")
 		if assert.Nil(err) {
 			defer os.RemoveAll(dir)
 			content, err := base64.StdEncoding.DecodeString(string(buf))
 			if assert.Nil(err) {
 				fileName := filepath.Join(dir, "file-1.0.0."+key)
-				err = ioutil.WriteFile(fileName, content, 0644)
+				err = os.WriteFile(fileName, content, 0644)
 				if assert.Nil(err) {
 					binFile, err := cmd.ExtractAndVerify(fileName, dir)
 					if assert.Nil(err, fmt.Sprintf("ExractPackage: %s", fileName)) {
-						actual, err := ioutil.ReadFile(binFile)
+						actual, err := os.ReadFile(binFile)
 						assert.Nil(err)
 						assert.Equal("hello, world\n", string(actual))
 					}

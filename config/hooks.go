@@ -2,7 +2,6 @@ package config
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -108,7 +107,7 @@ func isHooksUptodate() bool {
 	if !path.Exist(hooksVersionFile()) {
 		return false
 	}
-	data, err := ioutil.ReadFile(hooksVersionFile())
+	data, err := os.ReadFile(hooksVersionFile())
 	if err != nil {
 		return false
 	}
@@ -138,12 +137,12 @@ func InstallRepoHooks() error {
 		file := filepath.Join(hooksDir, name)
 		finfo, err := os.Stat(file)
 		if err != nil || int(finfo.Size()) != len(data) {
-			err = ioutil.WriteFile(file, []byte(data), 0755)
+			err = os.WriteFile(file, []byte(data), 0755)
 			if err != nil {
 				return fmt.Errorf("fail to write hooks: %s", err)
 			}
 		}
 	}
-	err = ioutil.WriteFile(hooksVersionFile(), []byte(gitHooksVersion+"\n"), 0644)
+	err = os.WriteFile(hooksVersionFile(), []byte(gitHooksVersion+"\n"), 0644)
 	return nil
 }

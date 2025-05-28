@@ -2,7 +2,6 @@ package project
 
 import (
 	"fmt"
-	"io/ioutil"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -170,7 +169,7 @@ func (v *Project) PrepareWorkdir() error {
 		if err != nil {
 			relDir = v.GitDir
 		}
-		err = ioutil.WriteFile(gitdir,
+		err = os.WriteFile(gitdir,
 			[]byte("gitdir: "+relDir+"\n"),
 			0644)
 		if err != nil {

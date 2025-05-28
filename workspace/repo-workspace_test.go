@@ -2,7 +2,6 @@ package workspace
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
@@ -36,7 +35,7 @@ func testCreateManifests(topDir, manifestURL string) error {
 
 	// Create manifest XMLs in manifest workdir
 	filename := filepath.Join(mProject.WorkDir, "m1.xml")
-	err = ioutil.WriteFile(filename, []byte(`<manifest>
+	err = os.WriteFile(filename, []byte(`<manifest>
   <remote name="aone" alias="origin" fetch=".." review="https://example.com" revision="default"></remote>
   <default remote="aone" revision="master"></default>
   <project name="platform/drivers" path="platform-drivers">
@@ -50,7 +49,7 @@ func testCreateManifests(topDir, manifestURL string) error {
 	}
 
 	filename = filepath.Join(mProject.WorkDir, "m2.xml")
-	err = ioutil.WriteFile(filename, []byte(`<manifest>
+	err = os.WriteFile(filename, []byte(`<manifest>
   <remote name="origin" alias="origin" fetch=".." review="https://example.com" revision="default"></remote>
   <default remote="origin" revision="master"></default>
   <project name="jiangxin/hello" path="hello"/>
@@ -91,7 +90,7 @@ func TestNewLoadEmptyRepoWorkSpace(t *testing.T) {
 		assert = assert.New(t)
 	)
 
-	tmpdir, err = ioutil.TempDir("", "git-repo-")
+	tmpdir, err = os.MkdirTemp("", "git-repo-")
 	if err != nil {
 		panic(err)
 	}
@@ -115,7 +114,7 @@ func TestNewLoadEmptyRepoWorkSpaceInit(t *testing.T) {
 		assert = assert.New(t)
 	)
 
-	tmpdir, err = ioutil.TempDir("", "git-repo-")
+	tmpdir, err = os.MkdirTemp("", "git-repo-")
 	if err != nil {
 		panic(err)
 	}
@@ -142,7 +141,7 @@ func TestLoadRepoWorkSpace(t *testing.T) {
 		assert = assert.New(t)
 	)
 
-	tmpdir, err = ioutil.TempDir("", "git-repo-")
+	tmpdir, err = os.MkdirTemp("", "git-repo-")
 	if err != nil {
 		panic(err)
 	}

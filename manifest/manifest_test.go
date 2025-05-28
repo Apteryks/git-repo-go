@@ -2,7 +2,6 @@ package manifest
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
@@ -107,7 +106,7 @@ func TestUnmarshal(t *testing.T) {
 func TestLoad(t *testing.T) {
 	assert := assert.New(t)
 
-	tmpdir, err := ioutil.TempDir("", "git-repo")
+	tmpdir, err := os.MkdirTemp("", "git-repo")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -130,7 +129,7 @@ func TestLoad(t *testing.T) {
 
 	// create manifest.xml
 	manifestFile := filepath.Join(repoDir, "manifest.xml")
-	err = ioutil.WriteFile(manifestFile, []byte(`
+	err = os.WriteFile(manifestFile, []byte(`
 <manifest>
   <remote name="aone" alias="origin" fetch="https://example.com" review="https://example.com" revision="default"></remote>
   <default remote="aone" revision="master"></default>
@@ -182,7 +181,7 @@ func TestLoad(t *testing.T) {
 func TestInclude(t *testing.T) {
 	assert := assert.New(t)
 
-	tmpdir, err := ioutil.TempDir("", "git-repo")
+	tmpdir, err := os.MkdirTemp("", "git-repo")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -200,7 +199,7 @@ func TestInclude(t *testing.T) {
 
 	// create manifest.xml
 	manifestFile := filepath.Join(repoDir, "manifest.xml")
-	err = ioutil.WriteFile(manifestFile, []byte(`
+	err = os.WriteFile(manifestFile, []byte(`
 <manifest>
   <remote name="aone" alias="origin" fetch="https://example.com" review="https://example.com" revision="default"></remote>
   <default remote="aone" revision="master"></default>
@@ -213,7 +212,7 @@ func TestInclude(t *testing.T) {
 </manifest>`), 0644)
 	assert.Equal(nil, err)
 
-	err = ioutil.WriteFile(filepath.Join(workDir, "manifest.inc"), []byte(`
+	err = os.WriteFile(filepath.Join(workDir, "manifest.inc"), []byte(`
 <manifest>
   <project name="platform/foo" path="foo"/>
 </manifest>`), 0644)
@@ -241,7 +240,7 @@ func TestInclude(t *testing.T) {
 func TestLoadWithLocalManifest(t *testing.T) {
 	assert := assert.New(t)
 
-	tmpdir, err := ioutil.TempDir("", "git-repo")
+	tmpdir, err := os.MkdirTemp("", "git-repo")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -259,7 +258,7 @@ func TestLoadWithLocalManifest(t *testing.T) {
 
 	// create manifest.xml
 	manifestFile := filepath.Join(repoDir, "manifest.xml")
-	err = ioutil.WriteFile(manifestFile, []byte(`
+	err = os.WriteFile(manifestFile, []byte(`
 <manifest>
   <remote name="aone" alias="origin" fetch="https://example.com" review="https://example.com" revision="default"></remote>
   <default remote="aone" revision="master"></default>
@@ -273,7 +272,7 @@ func TestLoadWithLocalManifest(t *testing.T) {
 
 	// create local_manifest.xml
 	localManifestFile := filepath.Join(repoDir, "local_manifest.xml")
-	err = ioutil.WriteFile(localManifestFile, []byte(`
+	err = os.WriteFile(localManifestFile, []byte(`
 <manifest>
   <remove-project name="platform/manifest"></remove-project>
 </manifest>`), 0644)
@@ -284,7 +283,7 @@ func TestLoadWithLocalManifest(t *testing.T) {
 	// create local_manifests/test.xml
 	localManifestFile = filepath.Join(repoDir, "local_manifests", "test.xml")
 	os.MkdirAll(filepath.Dir(localManifestFile), 0755)
-	err = ioutil.WriteFile(localManifestFile, []byte(`
+	err = os.WriteFile(localManifestFile, []byte(`
 <manifest>
   <project name="tools/git-repo" path="tools/git-repo"/>
 </manifest>`), 0644)
@@ -308,7 +307,7 @@ func TestLoadWithLocalManifest(t *testing.T) {
 func TestLoadWithLocalManifestDuplicateRemote(t *testing.T) {
 	assert := assert.New(t)
 
-	tmpdir, err := ioutil.TempDir("", "git-repo")
+	tmpdir, err := os.MkdirTemp("", "git-repo")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -326,7 +325,7 @@ func TestLoadWithLocalManifestDuplicateRemote(t *testing.T) {
 
 	// create manifest.xml
 	manifestFile := filepath.Join(repoDir, "manifest.xml")
-	err = ioutil.WriteFile(manifestFile, []byte(`
+	err = os.WriteFile(manifestFile, []byte(`
 <manifest>
   <remote name="aone" alias="origin" fetch="https://example.com" review="https://example.com" revision="default"></remote>
   <default remote="aone" revision="master"></default>
@@ -341,7 +340,7 @@ func TestLoadWithLocalManifestDuplicateRemote(t *testing.T) {
 	// create local_manifests/test.xml
 	localManifestFile := filepath.Join(repoDir, "local_manifests", "test.xml")
 	os.MkdirAll(filepath.Dir(localManifestFile), 0755)
-	err = ioutil.WriteFile(localManifestFile, []byte(`
+	err = os.WriteFile(localManifestFile, []byte(`
 <manifest>
   <remote name="aone" alias="origin" fetch="https://git.example.com" review="https://review.example.com" revision="default"></remote>
 </manifest>`), 0644)
@@ -358,7 +357,7 @@ func TestLoadWithLocalManifestDuplicateRemote(t *testing.T) {
 func TestLoadWithLocalManifestOverrideRemote(t *testing.T) {
 	assert := assert.New(t)
 
-	tmpdir, err := ioutil.TempDir("", "git-repo")
+	tmpdir, err := os.MkdirTemp("", "git-repo")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -376,7 +375,7 @@ func TestLoadWithLocalManifestOverrideRemote(t *testing.T) {
 
 	// create manifest.xml
 	manifestFile := filepath.Join(repoDir, "manifest.xml")
-	err = ioutil.WriteFile(manifestFile, []byte(`
+	err = os.WriteFile(manifestFile, []byte(`
 <manifest>
   <remote name="aone" alias="origin" fetch="https://example.com" review="https://example.com" revision="default"></remote>
   <default remote="aone" revision="master"></default>
@@ -391,7 +390,7 @@ func TestLoadWithLocalManifestOverrideRemote(t *testing.T) {
 	// create local_manifests/test.xml
 	localManifestFile := filepath.Join(repoDir, "local_manifests", "test.xml")
 	os.MkdirAll(filepath.Dir(localManifestFile), 0755)
-	err = ioutil.WriteFile(localManifestFile, []byte(`
+	err = os.WriteFile(localManifestFile, []byte(`
 <manifest>
   <remote name="aone" alias="origin" override="true" fetch="https://git.example.com" review="https://review.example.com" revision="default"></remote>
 </manifest>`), 0644)
@@ -410,7 +409,7 @@ func TestLoadWithLocalManifestOverrideRemote(t *testing.T) {
 func TestLoadWithLocalManifestDuplicateDefault(t *testing.T) {
 	assert := assert.New(t)
 
-	tmpdir, err := ioutil.TempDir("", "git-repo")
+	tmpdir, err := os.MkdirTemp("", "git-repo")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -428,7 +427,7 @@ func TestLoadWithLocalManifestDuplicateDefault(t *testing.T) {
 
 	// create manifest.xml
 	manifestFile := filepath.Join(repoDir, "manifest.xml")
-	err = ioutil.WriteFile(manifestFile, []byte(`
+	err = os.WriteFile(manifestFile, []byte(`
 <manifest>
   <remote name="aone" alias="origin" fetch="https://example.com" review="https://example.com" revision="default"></remote>
   <default remote="aone" revision="master"></default>
@@ -443,7 +442,7 @@ func TestLoadWithLocalManifestDuplicateDefault(t *testing.T) {
 	// create local_manifests/test.xml
 	localManifestFile := filepath.Join(repoDir, "local_manifests", "test.xml")
 	os.MkdirAll(filepath.Dir(localManifestFile), 0755)
-	err = ioutil.WriteFile(localManifestFile, []byte(`
+	err = os.WriteFile(localManifestFile, []byte(`
 <manifest>
   <default remote="aone" revision="main" override="0"></default>
 </manifest>`), 0644)
@@ -460,7 +459,7 @@ func TestLoadWithLocalManifestDuplicateDefault(t *testing.T) {
 func TestLoadWithLocalManifestOverrideDefault(t *testing.T) {
 	assert := assert.New(t)
 
-	tmpdir, err := ioutil.TempDir("", "git-repo")
+	tmpdir, err := os.MkdirTemp("", "git-repo")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -478,7 +477,7 @@ func TestLoadWithLocalManifestOverrideDefault(t *testing.T) {
 
 	// create manifest.xml
 	manifestFile := filepath.Join(repoDir, "manifest.xml")
-	err = ioutil.WriteFile(manifestFile, []byte(`
+	err = os.WriteFile(manifestFile, []byte(`
 <manifest>
   <remote name="aone" alias="origin" fetch="https://example.com" review="https://example.com" revision="default"></remote>
   <default remote="aone" revision="master"></default>
@@ -493,7 +492,7 @@ func TestLoadWithLocalManifestOverrideDefault(t *testing.T) {
 	// create local_manifests/test.xml
 	localManifestFile := filepath.Join(repoDir, "local_manifests", "test.xml")
 	os.MkdirAll(filepath.Dir(localManifestFile), 0755)
-	err = ioutil.WriteFile(localManifestFile, []byte(`
+	err = os.WriteFile(localManifestFile, []byte(`
 <manifest>
   <default remote="aone" revision="main" override="1"></default>
 </manifest>`), 0644)
@@ -510,7 +509,7 @@ func TestLoadWithLocalManifestOverrideDefault(t *testing.T) {
 func TestCircularInclude(t *testing.T) {
 	assert := assert.New(t)
 
-	tmpdir, err := ioutil.TempDir("", "git-repo")
+	tmpdir, err := os.MkdirTemp("", "git-repo")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -528,7 +527,7 @@ func TestCircularInclude(t *testing.T) {
 
 	// create manifest.xml
 	manifestFile := filepath.Join(repoDir, "manifest.xml")
-	err = ioutil.WriteFile(manifestFile, []byte(`
+	err = os.WriteFile(manifestFile, []byte(`
 <manifest>
   <remote name="aone" alias="origin" fetch="https://example.com" review="https://example.com" revision="default"></remote>
   <default remote="aone" revision="master"></default>
@@ -541,14 +540,14 @@ func TestCircularInclude(t *testing.T) {
 </manifest>`), 0644)
 	assert.Equal(nil, err)
 
-	err = ioutil.WriteFile(filepath.Join(workDir, "manifest.inc"), []byte(`
+	err = os.WriteFile(filepath.Join(workDir, "manifest.inc"), []byte(`
 <manifest>
   <project name="platform/foo" path="foo"/>
   <include name="manifest2.inc"/>
 </manifest>`), 0644)
 	assert.Equal(nil, err)
 
-	err = ioutil.WriteFile(filepath.Join(workDir, "manifest2.inc"), []byte(`
+	err = os.WriteFile(filepath.Join(workDir, "manifest2.inc"), []byte(`
 <manifest>
   <project name="platform/bar" path="bar"/>
   <include name="manifest.inc"/>
