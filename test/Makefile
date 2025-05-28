@@ -80,7 +80,8 @@ clean-chainlint:
 	$(RM) -r '$(CHAINLINTTMP_SQ)'
 
 check-chainlint:
-	@mkdir -p '$(CHAINLINTTMP_SQ)' && \
+	@test -z "$(CHAINLINTTESTS)" && exit 0 || \
+	mkdir -p '$(CHAINLINTTMP_SQ)' && \
 	for i in $(CHAINLINTTESTS); do \
 		echo "test_expect_success '$$i' '" && \
 		sed -e '/^# LINT: /d' $(TEST_LIB_DIRECTORY)/chainlint/$$i.test && \
@@ -98,8 +99,8 @@ check-chainlint:
 	if test -f ../GIT-BUILD-OPTIONS; then \
 		. ../GIT-BUILD-OPTIONS; \
 	fi && \
-	if test -x ../git$$X; then \
-		DIFFW="../git$$X --no-pager diff -w --no-index"; \
+	if command -v git; then \
+		DIFFW="git --no-pager diff -w --no-index"; \
 	else \
 		DIFFW="diff -w -u"; \
 	fi && \
