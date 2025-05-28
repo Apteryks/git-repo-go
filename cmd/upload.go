@@ -870,7 +870,7 @@ func (v *uploadCommand) UploadAndReport(branches []project.ReviewableBranch) err
 		if !theProject.IsClean() {
 			key := fmt.Sprintf("review.%s.autoupload", remote.Review)
 			if !cfg.HasKey(key) {
-				fmt.Printf("Uncommitted changes in " + theProject.Name)
+				fmt.Printf("Uncommitted changes in %s", theProject.Name)
 				fmt.Printf(" (did you forget to amend?):\n")
 				input := userInput(
 					fmt.Sprintf("Continue uploading? (y/N) "),

@@ -551,7 +551,7 @@ func (v *RepoWorkSpace) removeObsoletePaths(oldPaths, newPaths []string) ([]stri
 			remains = append(remains, p)
 			errMsgs = append(errMsgs,
 				fmt.Sprintf(`cannot remove project "%s": uncommitted changes are present.
-Please commit changes, upload then run sync again`,
+Please commit changes, upload then run syc again`,
 					p))
 			continue
 		}
@@ -581,7 +581,7 @@ Please commit changes, upload then run sync again`,
 	}
 
 	if len(errMsgs) > 0 {
-		err = fmt.Errorf(strings.Join(errMsgs, "\n"))
+		err = fmt.Errorf("%s", strings.Join(errMsgs, "\n"))
 	}
 
 	return remains, err
