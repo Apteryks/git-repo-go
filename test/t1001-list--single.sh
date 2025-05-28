@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="git-repo list --single test"
+test_description="git-repo-go list --single test"
 
 . lib/test-lib.sh
 
@@ -13,11 +13,11 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo init" '
+test_expect_success "git-repo-go init" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -g all -b Maint &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url -g all -b Maint &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}" \
@@ -28,7 +28,7 @@ test_expect_success "git-repo init" '
 test_expect_success "fail: cannot run list --single" '
 	(
 		cd work/main &&
-		test_must_fail git-repo list --single pwd
+		test_must_fail git-repo-go list --single pwd
 	) >actual 2>&1 &&
 	cat >expect <<-EOF &&
 	FATAL: cannot run in single mode

@@ -13,11 +13,11 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo sync to Maint branch" '
+test_expect_success "git-repo-go sync to Maint branch" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b Maint &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url -b Maint &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -55,8 +55,8 @@ test_expect_success "edit files in workdir" '
 test_expect_success "fail to sync, workspace is dirty" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b master &&
-		test_must_fail git-repo sync \
+		git-repo-go init -u $manifest_url -b master &&
+		test_must_fail git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -80,7 +80,7 @@ test_expect_success "manifests version: 2.0" '
 test_expect_success "drivers/driver-1 not switch branch, workspace dirty is ok" '
 	(
 		cd work &&
-		git-repo sync -l \
+		git-repo-go sync -l \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}" \
@@ -108,7 +108,7 @@ test_expect_success "fail to sync projects/app1, workspace is dirty (not staged)
 			git status -uno --porcelain
 		) >actual &&
 		test_cmp expect actual &&
-		test_must_fail git-repo sync -l \
+		test_must_fail git-repo-go sync -l \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}" \
@@ -134,7 +134,7 @@ test_expect_success "fail to sync projects/app2, workspace is dirty (staged)" '
 			git status -uno --porcelain
 		) >actual &&
 		test_cmp expect actual &&
-		test_must_fail git-repo sync -l \
+		test_must_fail git-repo-go sync -l \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"  \

@@ -15,7 +15,7 @@ Running Tests
 -------------
 
 The easiest way to run tests is to say "make".  This runs all
-the tests on the current git repository.
+the tests on the current git repo-go itory.
 
     === Running 2 tests in this tree ===
     [...]

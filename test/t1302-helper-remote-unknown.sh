@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="git-repo helper proto --type agit"
+test_description="git-repo-go helper proto --type agit"
 
 . lib/test-lib.sh
 
@@ -10,18 +10,18 @@ export PATH
 test_expect_success "setup" '
 	(
 		mkdir bin && cd bin &&
-		cat >git-repo-helper-proto-unknown1 <<-EOF &&
+		cat >git-repo-go-helper-proto-unknown1 <<-EOF &&
 		#!/bin/sh
 
-		git-repo helper proto --type agit "\$@"
+		git-repo-go helper proto --type agit "\$@"
 		EOF
-		chmod a+x git-repo-helper-proto-unknown1 &&
-		cat >git-repo-helper-proto-unknown2 <<-EOF &&
+		chmod a+x git-repo-go-helper-proto-unknown1 &&
+		cat >git-repo-go-helper-proto-unknown2 <<-EOF &&
 		#!/bin/sh
 
-		git-repo helper proto --type gerrit "\$@"
+		git-repo-go helper proto --type gerrit "\$@"
 		EOF
-		chmod a+x git-repo-helper-proto-unknown2
+		chmod a+x git-repo-go-helper-proto-unknown2
 	)
 '
 
@@ -68,7 +68,7 @@ test_expect_success "upload command (SSH protocol, version 0)" '
 	  "Version": 1
 	}
 	EOF
-	git-repo helper proto --type unknown1 --upload >actual 2>&1 &&
+	git-repo-go helper proto --type unknown1 --upload >actual 2>&1 &&
 	test_cmp expect actual
 '
 
@@ -91,7 +91,7 @@ cat >expect <<EOF
 		"refs/heads/my/topic:refs/for/master/my/topic"
 	],
 	"env": [
-		"AGIT_FLOW=git-repo/n.n.n.n"
+		"AGIT_FLOW=git-repo-go/n.n.n.n"
 	]
 }
 EOF
@@ -117,8 +117,8 @@ test_expect_success "upload command (SSH protocol, version 2)" '
 	  "Version": 1
 	}
 	EOF
-	git-repo helper proto --type unknown1 --version 2 --upload >out 2>&1 &&
-	sed -e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" <out >actual &&
+	git-repo-go helper proto --type unknown1 --version 2 --upload >out 2>&1 &&
+	sed -e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" <out >actual &&
 	test_cmp expect actual
 '
 
@@ -128,17 +128,17 @@ EOF
 
 test_expect_success "download ref" '
 	printf "12345\n" | \
-	git-repo helper proto --type unknown2 --download >actual 2>&1 &&
+	git-repo-go helper proto --type unknown2 --download >actual 2>&1 &&
 	test_cmp expect actual
 '
 
 cat >expect <<EOF
-Error: cannot find helper 'git-repo-helper-proto-unknown3'
+Error: cannot find helper 'git-repo-go-helper-proto-unknown3'
 EOF
 
 test_expect_success "cannot find helper program" '
 	printf "12345\n" | \
-	test_must_fail git-repo helper proto --type unknown3 --download >actual 2>&1 &&
+	test_must_fail git-repo-go helper proto --type unknown3 --download >actual 2>&1 &&
 	test_cmp expect actual
 '
 

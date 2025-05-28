@@ -1,6 +1,12 @@
 # Changelog
 
-Changes of git-repo.
+Changes of git-repo-go.
+
+## 0.9.0 (2025-05-28)
+
+* Remove deprecated uses of ioutils module
+* Complete renaming of git-repo to git-repo-go, fixing git aliases
+* Bump go-git dependency to v5 to fix GO-2024-2456 vulnerability
 
 ## 0.7.8 (2021-11-19)
 

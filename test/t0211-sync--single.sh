@@ -16,14 +16,14 @@ test_expect_success "setup" '
 test_expect_success "init -u" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url
+		git-repo-go init -u $manifest_url
 	)
 '
 
 test_expect_success "cannot run sync --single" '
 	(
 		cd work &&
-		test_must_fail git-repo sync --single -n
+		test_must_fail git-repo-go sync --single -n
 	) >actual 2>&1 &&
 	cat >expect <<-EOF &&
 	FATAL: cannot run in single mode

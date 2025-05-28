@@ -13,10 +13,10 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo init" '
+test_expect_success "git-repo-go init" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -g all -b Maint
+		git-repo-go init -u $manifest_url -g all -b Maint
 	)
 '
 
@@ -54,14 +54,14 @@ test_expect_success "setup local manifest xml" '
 		</manifest>
 		EOF
 
-		git repo manifest
+		git repo-go manifest
 	)
 '
 
-test_expect_success "git-repo init & sync" '
+test_expect_success "git-repo-go init & sync" '
 	(
 		cd work &&
-		git-repo sync \
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -71,7 +71,7 @@ test_expect_success "git-repo init & sync" '
 test_expect_success "create local branch: my/topic" '
 	(
 		cd work &&
-		git-repo start --all my/topic
+		git-repo-go start --all my/topic
 	)
 '
 
@@ -100,7 +100,7 @@ test_expect_success "check settings for branch tracking" '
 test_expect_success "repo sync" '
 	(
 		cd work &&
-		git repo sync
+		git repo-go sync
 	)
 '
 

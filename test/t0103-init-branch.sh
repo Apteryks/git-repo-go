@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="git-repo init"
+test_description="git-repo-go init"
 
 . lib/test-lib.sh
 
@@ -13,10 +13,10 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo init -u -b <tag v0.1>" '
+test_expect_success "git-repo-go init -u -b <tag v0.1>" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b refs/tags/v0.1
+		git-repo-go init -u $manifest_url -b refs/tags/v0.1
 	)
 '
 
@@ -60,7 +60,7 @@ test_expect_success "no remote track" '
 test_expect_success "init without -b, no upgrade" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url
+		git-repo-go init -u $manifest_url
 	)
 '
 
@@ -90,10 +90,10 @@ test_expect_success "still no remote track" '
 	)
 '
 
-test_expect_success "git-repo init -u -b <tag v0.2>" '
+test_expect_success "git-repo-go init -u -b <tag v0.2>" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b refs/tags/v0.2
+		git-repo-go init -u $manifest_url -b refs/tags/v0.2
 	)
 '
 
@@ -126,7 +126,7 @@ test_expect_success "no remote track for version 0.2" '
 test_expect_success "init -b Maint" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b Maint
+		git-repo-go init -u $manifest_url -b Maint
 	)
 '
 
@@ -161,7 +161,7 @@ test_expect_success "remote track: refs/heads/Maint" '
 test_expect_success "init -b master" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b master
+		git-repo-go init -u $manifest_url -b master
 	)
 '
 
@@ -196,7 +196,7 @@ test_expect_success "remote track: refs/heads/master" '
 test_expect_success "back to Maint" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b Maint
+		git-repo-go init -u $manifest_url -b Maint
 	)
 '
 

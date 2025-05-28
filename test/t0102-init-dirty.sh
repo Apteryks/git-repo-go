@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="git-repo init with dirty worktree"
+test_description="git-repo-go init with dirty worktree"
 
 . lib/test-lib.sh
 
@@ -13,10 +13,10 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo init -b Maint" '
+test_expect_success "git-repo-go init -b Maint" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b Maint
+		git-repo-go init -u $manifest_url -b Maint
 	)
 '
 
@@ -31,7 +31,7 @@ test_expect_success "edit default.xml" '
 test_expect_success "no upstream changed, init ok" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url
+		git-repo-go init -u $manifest_url
 	)
 '
 
@@ -41,7 +41,7 @@ test_expect_success "init -b to change branch, failed for dirty" '
 		cat >expect<<-EOF &&
 		Error: worktree of manifests is dirty, checkout failed
 		EOF
-		test_must_fail git-repo init -u $manifest_url -b master 2>actual &&
+		test_must_fail git-repo-go init -u $manifest_url -b master 2>actual &&
 		test_cmp expect actual
 	)
 '
@@ -71,7 +71,7 @@ test_expect_success "detached by hand" '
 test_expect_success "do not overwrite dirty file" '
 	(
 		cd work &&
-		test_must_fail git-repo init -u $manifest_url -b master 2>&1 |head -2 >actual &&
+		test_must_fail git-repo-go init -u $manifest_url -b master 2>&1 |head -2 >actual &&
 		cat >expect <<-EOF &&
 		error: Your local changes to the following files would be overwritten by checkout:
 		EOF
@@ -97,21 +97,21 @@ test_expect_success "clean dirty manifest repo" '
 test_expect_success "detached using init --detach command" '
 	(
 		cd work &&
-		git-repo init --detach
+		git-repo-go init --detach
 	)
 '
 
 test_expect_success "touble detach" '
 	(
 		cd work &&
-		git-repo init --detach
+		git-repo-go init --detach
 	)
 '
 
 test_expect_success "init switched to a tag" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b refs/tags/v0.1
+		git-repo-go init -u $manifest_url -b refs/tags/v0.1
 	)
 '
 
@@ -152,7 +152,7 @@ test_expect_success "edit default.xml" '
 test_expect_success "fail to switch, because of dirty manifest" '
 	(
 		cd work &&
-		test_must_fail git-repo init -u $manifest_url -b Maint 2>&1 |head -3 >actual &&
+		test_must_fail git-repo-go init -u $manifest_url -b Maint 2>&1 |head -3 >actual &&
 		cat >expect <<-EOF &&
 		error: Your local changes to the following files would be overwritten by checkout:
 		$(printf "\t")default.xml

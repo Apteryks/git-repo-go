@@ -13,11 +13,11 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo init & sync" '
+test_expect_success "git-repo-go init & sync" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -g all -b Maint &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url -g all -b Maint &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\", \"version\":2}"
@@ -30,7 +30,7 @@ test_expect_success "detached: no branch ready for upload" '
 		cat >expect<<-EOF &&
 		NOTE: no branches ready for upload
 		EOF
-		git-repo upload --mock-ssh-info-status 200 \
+		git-repo-go upload --mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"type\":\"agit\", \"version\":2}" \
 			>actual 2>&1 &&
@@ -41,11 +41,11 @@ test_expect_success "detached: no branch ready for upload" '
 test_expect_success "new branch: no branch ready for upload" '
 	(
 		cd work &&
-		git repo start --all my/topic1 &&
+		git repo-go start --all my/topic1 &&
 		cat >expect<<-EOF &&
 		NOTE: no branches ready for upload
 		EOF
-		git-repo upload --mock-ssh-info-status 200 \
+		git-repo-go upload --mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"type\":\"agit\", \"version\":2}" \
 			>actual 2>&1 &&
@@ -77,7 +77,7 @@ test_expect_success "no host/port in ssh_info: bad review url" '
 		       (bad review URL: file:///path/to/hello/main.git)
 		
 		EOF
-		test_must_fail git-repo upload \
+		test_must_fail git-repo-go upload \
 			--assume-yes \
 			--no-cache \
 			--no-edit \
@@ -108,11 +108,11 @@ test_expect_success "no host/port in ssh_info: use project's http address" '
 		  branch my/topic1 ( 1 commit(s)):
 		         <hash>
 		to https://example.com (y/N)? Yes
-		NOTE: main> will execute command: git -c http.extraHeader=AGIT-FLOW: git-repo/n.n.n.n push aone refs/heads/my/topic1:refs/for/Maint/my/topic1
+		NOTE: main> will execute command: git -c http.extraHeader=AGIT-FLOW: git-repo-go/n.n.n.n push aone refs/heads/my/topic1:refs/for/Maint/my/topic1
 		
 		----------------------------------------------------------------------
 		EOF
-		git-repo upload \
+		git-repo-go upload \
 			--assume-yes \
 			--no-cache \
 			--no-edit \
@@ -121,7 +121,7 @@ test_expect_success "no host/port in ssh_info: use project's http address" '
 			--mock-ssh-info-response \
 			"{\"type\":\"agit\", \"version\":2}" \
 			>out 2>&1 &&
-		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" <out >actual &&
+		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" <out >actual &&
 		test_cmp expect actual
 	)
 '
@@ -146,12 +146,12 @@ test_expect_success "no host/port in ssh_info: use project's ssh address" '
 		         <hash>
 		to https://example.com (y/N)? Yes
 		NOTE: main> will execute command: git push -o old-oid=<hash> aone refs/heads/my/topic1:refs/for/Maint/my/topic1
-		NOTE: main> with extra environment: AGIT_FLOW=git-repo/n.n.n.n
+		NOTE: main> with extra environment: AGIT_FLOW=git-repo-go/n.n.n.n
 		NOTE: main> with extra environment: GIT_SSH_COMMAND=ssh -o SendEnv=AGIT_FLOW
 		
 		----------------------------------------------------------------------
 		EOF
-		git-repo upload \
+		git-repo-go upload \
 			--assume-yes \
 			--no-cache \
 			--no-edit \
@@ -160,7 +160,7 @@ test_expect_success "no host/port in ssh_info: use project's ssh address" '
 			--mock-ssh-info-response \
 			"{\"type\":\"agit\", \"version\":2}" \
 			>out 2>&1 &&
-		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" <out >actual &&
+		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" <out >actual &&
 		test_cmp expect actual
 	)
 '

@@ -191,7 +191,7 @@ func (v *RepoWorkSpace) loadProjects(manifestURL string) error {
 
 	// Check whether git-repo is disabled.
 	if v.ManifestProject.Config().GetBool(config.CfgAppGitRepoDisabled, false) {
-		return fmt.Errorf("git-repo is disabled for this workspace, use repo instead")
+		return fmt.Errorf("git-repo-go is disabled for this workspace, use repo-go instead")
 	}
 
 	// Set projects

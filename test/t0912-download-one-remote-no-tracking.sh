@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="test git-repo download: one remote, no tracking"
+test_description="test git-repo-go download: one remote, no tracking"
 
 . lib/test-lib.sh
 
@@ -28,7 +28,7 @@ test_expect_success "remove remote and fail to download" '
 test_expect_success "no remote and fail to download" '
 	(
 		cd work/main &&
-		test_must_fail git-repo download --single \
+		test_must_fail git-repo-go download --single \
 			--no-cache \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
@@ -52,7 +52,7 @@ test_expect_success "add remote origin and set review-url" '
 test_expect_success "download and checkout" '
 	(
 		cd work/main &&
-		git-repo download --single \
+		git-repo-go download --single \
 			--no-cache \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \

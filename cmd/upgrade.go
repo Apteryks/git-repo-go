@@ -136,7 +136,7 @@ func (v *upgradeCommand) Command() *cobra.Command {
 
 	v.cmd = &cobra.Command{
 		Use:   "upgrade",
-		Short: "Check and upgrade git-repo",
+		Short: "Check and upgrade git-repo-go",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return v.Execute(args)
 		},
@@ -615,7 +615,7 @@ func (v upgradeCommand) UpgradeVersion(target string, info *upgradeInfo) error {
 		newVersion  = info.Version(!v.O.Test)
 	)
 
-	tmpDir, err := os.MkdirTemp("", "git-repo-")
+	tmpDir, err := os.MkdirTemp("", "git-repo-go-")
 	if err != nil {
 		return err
 	}
@@ -639,7 +639,7 @@ func (v upgradeCommand) UpgradeVersion(target string, info *upgradeInfo) error {
 	}
 
 	if config.IsDryRun() {
-		log.Notef("will upgrade git-repo from version %s to %s, from file %s",
+		log.Notef("will upgrade git-repo-go from version %s to %s, from file %s",
 			version.Version,
 			newVersion,
 			binFile)
@@ -651,7 +651,7 @@ func (v upgradeCommand) UpgradeVersion(target string, info *upgradeInfo) error {
 		return err
 	}
 
-	log.Notef("successfully upgrade git-repo from %s to %s",
+	log.Notef("successfully upgrade git-repo-go from %s to %s",
 		version.Version,
 		newVersion,
 	)

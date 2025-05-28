@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="git-repo test log"
+test_description="git-repo-go test log"
 
 . lib/test-lib.sh
 
@@ -11,8 +11,8 @@ NOTE: note message...
 NOTE: hello, world.
 EOF
 
-test_expect_success "git-repo test log" '
-	git-repo test log >actual 2>&1 &&
+test_expect_success "git-repo-go test log" '
+	git-repo-go test log >actual 2>&1 &&
 	test_cmp expect actual
 '
 
@@ -21,8 +21,8 @@ WARNING: warn message...
 ERROR: error message...
 EOF
 
-test_expect_success "git-repo test log -q" '
-	git-repo test log -q >actual 2>&1 &&
+test_expect_success "git-repo-go test log -q" '
+	git-repo-go test log -q >actual 2>&1 &&
 	test_cmp expect actual
 '
 
@@ -34,8 +34,8 @@ NOTE: note message...
 NOTE: hello, world.
 EOF
 
-test_expect_success "git-repo test log -v" '
-	git-repo test log -v >actual 2>&1 &&
+test_expect_success "git-repo-go test log -v" '
+	git-repo-go test log -v >actual 2>&1 &&
 	test_cmp expect actual
 '
 
@@ -51,8 +51,8 @@ NOTE: note message...
 NOTE: hello, world.
 EOF
 
-test_expect_success "git-repo test log -vv" '
-	git-repo test log -vv >actual 2>&1 &&
+test_expect_success "git-repo-go test log -vv" '
+	git-repo-go test log -vv >actual 2>&1 &&
 	test_cmp expect actual
 '
 
@@ -71,8 +71,8 @@ NOTE: note message...
 NOTE: hello, world.
 EOF
 
-test_expect_success "git-repo test log -vvv" '
-	git-repo test log -vvv >actual 2>&1 &&
+test_expect_success "git-repo-go test log -vvv" '
+	git-repo-go test log -vvv >actual 2>&1 &&
 	test_cmp expect actual
 '
 

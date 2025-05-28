@@ -17,12 +17,12 @@ test_expect_success "setup" '
 '
 
 test_expect_success "install git pr alias command" '
-	git-repo version &&
+	git-repo-go version &&
 	git config alias.pr >actual &&
 	git config alias.peer-review >>actual &&
 	cat >expect <<-EOF &&
-	repo upload --single
-	repo upload --single
+	repo-go upload --single
+	repo-go upload --single
 	EOF
 	test_cmp expect actual
 '
@@ -58,7 +58,7 @@ test_expect_success "confirm if has local edit" '
 		Uncommitted changes in jiangxin/main (did you forget to amend?):
 		Continue uploading? (y/N) Yes
 		NOTE: will execute command: git push ssh://git@ssh.example.com/jiangxin/main.git refs/heads/my/topic-test:refs/for/master/my/topic-test
-		NOTE: with extra environment: AGIT_FLOW=git-repo/n.n.n.n
+		NOTE: with extra environment: AGIT_FLOW=git-repo-go/n.n.n.n
 		NOTE: with extra environment: GIT_SSH_COMMAND=ssh -o SendEnv=AGIT_FLOW
 		
 		----------------------------------------------------------------------
@@ -73,7 +73,7 @@ test_expect_success "confirm if has local edit" '
 				--mock-ssh-info-response \
 				"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\", \"version\":2}"
 		) >out 2>&1 &&
-		sed -e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" <out >actual &&
+		sed -e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" <out >actual &&
 		test_cmp expect actual
 	)
 '

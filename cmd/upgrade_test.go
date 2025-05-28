@@ -75,14 +75,14 @@ func TestUpgradeInfoURLs(t *testing.T) {
 	uinfo = upgradeInfo{
 		Production: "0.9.1",
 		Test:       "1.0.0.rc1",
-		URLPattern: "http://example.com/<version>/git-repo-<os>-<arch>.tgz",
+		URLPattern: "http://example.com/<version>/git-repo-go-<os>-<arch>.tgz",
 	}
 	expect = []string{
-		"http://example.com/0.9.1/git-repo-" + osType + "-" + archType + ".tgz",
+		"http://example.com/0.9.1/git-repo-go-" + osType + "-" + archType + ".tgz",
 	}
 	assert.Equal(expect, uinfo.URLs(true))
 	expect = []string{
-		"http://example.com/1.0.0.rc1/git-repo-" + osType + "-" + archType + ".tgz",
+		"http://example.com/1.0.0.rc1/git-repo-go-" + osType + "-" + archType + ".tgz",
 	}
 	assert.Equal(expect, uinfo.URLs(false))
 }

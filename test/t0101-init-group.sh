@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="Test groups in git-repo init"
+test_description="Test groups in git-repo-go init"
 
 . lib/test-lib.sh
 
@@ -13,7 +13,7 @@ test_expect_success "setup" '
 		touch .repo &&
 		mkdir work &&
 		cd work &&
-		git-repo init -u $manifest_url
+		git-repo-go init -u $manifest_url
 	)
 '
 
@@ -32,7 +32,7 @@ test_expect_success "no platform & group settings" '
 test_expect_success "platform = all, groups = <default>" '
 	(
 		cd work &&
-		git-repo init --platform all &&
+		git-repo-go init --platform all &&
 		echo "default,platform-linux,platform-darwin,platform-windows" >expect &&
 		(
 			cd .repo/manifests &&
@@ -45,7 +45,7 @@ test_expect_success "platform = all, groups = <default>" '
 test_expect_success "platform = all, groups = all" '
 	(
 		cd work &&
-		git-repo init --platform all --groups all &&
+		git-repo-go init --platform all --groups all &&
 		echo "all,platform-linux,platform-darwin,platform-windows" >expect &&
 		(
 			cd .repo/manifests &&
@@ -58,7 +58,7 @@ test_expect_success "platform = all, groups = all" '
 test_expect_success "platform = auto, groups = <default>" '
 	(
 		cd work &&
-		git-repo init --platform auto &&
+		git-repo-go init --platform auto &&
 		printf "" >expect &&
 		(
 			cd .repo/manifests &&
@@ -71,7 +71,7 @@ test_expect_success "platform = auto, groups = <default>" '
 test_expect_success "platform = auto, groups = default" '
 	(
 		cd work &&
-		git-repo init --platform auto &&
+		git-repo-go init --platform auto &&
 		printf "" >expect &&
 		(
 			cd .repo/manifests &&
@@ -84,7 +84,7 @@ test_expect_success "platform = auto, groups = default" '
 test_expect_success "platform = <default>, groups = app" '
 	(
 		cd work &&
-		git-repo init -g app &&
+		git-repo-go init -g app &&
 		echo "app,platform-*" >expect &&
 		(
 			cd .repo/manifests &&
@@ -98,7 +98,7 @@ test_expect_success "platform = <default>, groups = app" '
 test_expect_success "platform = <default>, groups = <default> # nothing changed" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url &&
+		git-repo-go init -u $manifest_url &&
 		echo "app,platform-*" >expect &&
 		(
 			cd .repo/manifests &&
@@ -112,7 +112,7 @@ test_expect_success "platform = <default>, groups = <default> # nothing changed"
 test_expect_success "platform = auto, groups = default" '
 	(
 		cd work &&
-		git-repo init -p auto -g default -u $manifest_url &&
+		git-repo-go init -p auto -g default -u $manifest_url &&
 		printf "" >expect &&
 		(
 			cd .repo/manifests &&

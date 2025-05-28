@@ -17,14 +17,14 @@ test_expect_success "setup" '
 '
 
 test_expect_success "install git review aliases command" '
-	test_must_fail git-repo &&
+	test_must_fail git-repo-go &&
 	git config alias.peer-review >actual &&
 	git config alias.pr >>actual &&
 	git config alias.review >>actual &&
 	cat >expect <<-EOF &&
-	repo upload --single
-	repo upload --single
-	repo upload --single
+	repo-go upload --single
+	repo-go upload --single
+	repo-go upload --single
 	EOF
 	test_cmp expect actual
 '
@@ -79,14 +79,14 @@ test_expect_success "upload: pr --br <branch> to upload specific branch" '
 				--mock-ssh-info-response \
 				"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\", \"version\":2}"
 		) >out 2>&1 &&
-		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" <out >actual &&
+		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" <out >actual &&
 		cat >expect<<-EOF &&
 		Upload project (jiangxin/main) to remote branch master (draft):
 		  branch jx/topic1 ( 1 commit(s)):
 		         <hash>
 		to https://example.com (y/N)? Yes
 		NOTE: will execute command: git push ssh://git@ssh.example.com/jiangxin/main.git refs/heads/jx/topic1:refs/drafts/master/jx/topic1
-		NOTE: with extra environment: AGIT_FLOW=git-repo/n.n.n.n
+		NOTE: with extra environment: AGIT_FLOW=git-repo-go/n.n.n.n
 		NOTE: with extra environment: GIT_SSH_COMMAND=ssh -o SendEnv=AGIT_FLOW
 		NOTE: will update-ref refs/published/jx/topic1 on refs/heads/jx/topic1, reason: review from jx/topic1 to master on https://example.com
 		

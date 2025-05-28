@@ -17,10 +17,10 @@ test_expect_success "setup" '
 '
 
 test_expect_success "install git review aliases command" '
-	git-repo version &&
+	git-repo-go version &&
 	git config alias.pr >>actual &&
 	cat >expect <<-EOF &&
-	repo upload --single
+	repo-go upload --single
 	EOF
 	test_cmp expect actual
 '

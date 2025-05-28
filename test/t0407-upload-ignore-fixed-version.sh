@@ -13,10 +13,10 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo init" '
+test_expect_success "git-repo-go init" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -g all -b Maint
+		git-repo-go init -u $manifest_url -g all -b Maint
 	)
 '
 
@@ -54,14 +54,14 @@ test_expect_success "setup local manifest xml" '
 		</manifest>
 		EOF
 
-		git repo manifest
+		git repo-go manifest
 	)
 '
 
-test_expect_success "git-repo init & sync" '
+test_expect_success "git-repo-go init & sync" '
 	(
 		cd work &&
-		git-repo sync \
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -71,7 +71,7 @@ test_expect_success "git-repo init & sync" '
 test_expect_success "create local branch: my/topic" '
 	(
 		cd work &&
-		git-repo start --all my/topic
+		git-repo-go start --all my/topic
 	)
 '
 
@@ -104,7 +104,7 @@ test_expect_success "do not upload fixed revision which not changed" '
 		NOTE: no branches ready for upload
 		EOF
 
-		git-repo upload \
+		git-repo-go upload \
 			--dryrun \
 			--assume-yes \
 			--no-cache \
@@ -115,7 +115,7 @@ test_expect_success "do not upload fixed revision which not changed" '
 			"{\"type\":\"agit\", \"version\":2, \"pushurl\":\"https://<email>@git.example.com/agit\"}" \
 			>out 2>&1 &&
 		sed -e "s/[0-9a-f]\{40\}/<hash>/g" \
-			-e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" \
+			-e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" \
 			-e "s#///.*/hello/main.git#///path/to/hello/main.git#g" \
 			<out >actual &&
 		test_cmp expect actual

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="test git-repo download: two remotes, default origin'"
+test_description="test git-repo-go download: two remotes, default origin'"
 
 . lib/test-lib.sh
 
@@ -30,7 +30,7 @@ test_expect_success "add two remotes" '
 test_expect_success "default download from origin" '
 	(
 		cd work/main &&
-		git-repo download --single \
+		git-repo-go download --single \
 			--no-cache \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \

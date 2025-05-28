@@ -27,7 +27,7 @@ import (
 )
 
 var (
-	// Version is the verison of git-repo.
+	// Version is the verison of git-repo-go.
 	Version = "undefined"
 
 	// GitVersion is version of git.
@@ -63,7 +63,7 @@ var gitCompatibleIssues = []gitCompatibleIssue{
 	},
 }
 
-// GetVersion returns git-repo version.
+// GetVersion returns git-repo-go version.
 func GetVersion() string {
 	return Version
 }
@@ -142,7 +142,7 @@ func ValidateGitVersion() {
 		suppressIssues bool
 	)
 
-	if _, ok := os.LookupEnv("GIT_REPO_SUPPRESS_COMPATIBLE_ISSUES"); ok {
+	if _, ok := os.LookupEnv("GIT_REPO_GO_SUPPRESS_COMPATIBLE_ISSUES"); ok {
 		suppressIssues = true
 	}
 

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="test 'git-repo prune'"
+test_description="test 'git-repo-go prune'"
 
 . lib/test-lib.sh
 
@@ -13,8 +13,8 @@ test_expect_success "setup" '
 	mkdir work &&
 	(
 		cd work &&
-		git-repo init -g all -u $manifest_url &&
-		git-repo sync \
+		git-repo-go init -g all -u $manifest_url &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -24,13 +24,13 @@ test_expect_success "setup" '
 test_expect_success "create branches" '
 	(
 		cd work &&
-		git-repo start --all jx/topic1 &&
+		git-repo-go start --all jx/topic1 &&
 		(
 			cd drivers/driver-1 &&
 			test_tick &&
 			git commit --allow-empty -m "topic1 on driver1: hack1"
 		) &&
-		git-repo start --all jx/topic2 &&
+		git-repo-go start --all jx/topic2 &&
 		(
 			cd drivers/driver-1 &&
 			test_tick &&
@@ -58,8 +58,8 @@ test_expect_success "create branches" '
 test_expect_success "create branches and dirty worktree" '
 	(
 		cd work &&
-		git-repo start --all jx/topic3 &&
-		git-repo start --all jx/topic4 &&
+		git-repo-go start --all jx/topic3 &&
+		git-repo-go start --all jx/topic4 &&
 		(
 			cd drivers/driver-1 &&
 			echo hack >>README.md &&
@@ -84,10 +84,10 @@ test_expect_success "create branches and dirty worktree" '
 	)
 '
 
-test_expect_success "git-repo abandon a single branch" '
+test_expect_success "git-repo-go abandon a single branch" '
 	(
 		cd work &&
-		git-repo abandon -b jx/topic1
+		git-repo-go abandon -b jx/topic1
 	) >actual 2>&1 &&
 	cat >expect<<-EOF &&
 	Pruned branches (already merged)
@@ -106,10 +106,10 @@ test_expect_success "git-repo abandon a single branch" '
 		test_cmp expect actual
 '
 
-test_expect_success "git-repo abandon a single branch, twice" '
+test_expect_success "git-repo-go abandon a single branch, twice" '
 	(
 		cd work &&
-		git-repo abandon -b jx/topic1
+		git-repo-go abandon -b jx/topic1
 	) >actual 2>&1 &&
 	cat >expect<<-EOF &&
 	ERROR: project main> fail to resolve refs/heads/jx/topic1
@@ -125,10 +125,10 @@ test_expect_success "git-repo abandon a single branch, twice" '
 	test_cmp expect actual
 '
 
-test_expect_success "git-repo abandon a single branch, force" '
+test_expect_success "git-repo-go abandon a single branch, force" '
 	(
 		cd work &&
-		git-repo abandon -b jx/topic1 --force
+		git-repo-go abandon -b jx/topic1 --force
 	) >actual 2>&1 &&
 	cat >expect<<-EOF &&
 	ERROR: project main> fail to resolve refs/heads/jx/topic1
@@ -144,10 +144,10 @@ test_expect_success "git-repo abandon a single branch, force" '
 	test_cmp expect actual
 '
 
-test_expect_success "git-repo abandon selected projects, force" '
+test_expect_success "git-repo-go abandon selected projects, force" '
 	(
 		cd work &&
-		git-repo abandon --all --force main projects/app2
+		git-repo-go abandon --all --force main projects/app2
 	) >actual 2>&1 &&
 	cat >expect<<-EOF &&
 	Abandoned branches
@@ -165,10 +165,10 @@ test_expect_success "git-repo abandon selected projects, force" '
 	test_cmp expect actual
 '
 
-test_expect_success "git-repo abandon all projects" '
+test_expect_success "git-repo-go abandon all projects" '
 	(
 		cd work &&
-		git-repo abandon --all --force
+		git-repo-go abandon --all --force
 	) >actual 2>&1 &&
 	cat >expect<<-EOF &&
 	Abandoned branches

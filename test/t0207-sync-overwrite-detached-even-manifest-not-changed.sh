@@ -13,11 +13,11 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo sync" '
+test_expect_success "git-repo-go sync" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b master &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url -b master &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -38,11 +38,11 @@ test_expect_success "edit files in workdir, all projects are in detached HEAD" '
 	)
 '
 
-test_expect_success "git-repo resync again" '
+test_expect_success "git-repo-go resync again" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"

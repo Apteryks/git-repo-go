@@ -6,7 +6,7 @@ test_description="install extra config"
 
 test_expect_success "before install extra git config" '
 	test ! -f .gitconfig &&
-	test ! -f .git-repo/gitconfig &&
+	test ! -f .git-repo-go/gitconfig &&
 	cat >expect <<-EOF &&
 	EOF
 	test_must_fail git config --global --get-all include.path >actual &&
@@ -15,25 +15,25 @@ test_expect_success "before install extra git config" '
 	EOF
 '
 
-test_expect_success "install git config by running git-repo" '
-	test_must_fail git-repo &&
+test_expect_success "install git config by running git-repo-go" '
+	test_must_fail git-repo-go &&
 	test -f .gitconfig &&
-	test -f .git-repo/gitconfig &&
+	test -f .git-repo-go/gitconfig &&
 	cat >expect <<-EOF &&
 	status
 	EOF
-	git config -f .git-repo/gitconfig alias.st >actual &&
+	git config -f .git-repo-go/gitconfig alias.st >actual &&
 	test_cmp expect actual
 '
 
-test_expect_success "install git config by running git-repo --version" '
+test_expect_success "install git config by running git-repo-go --version" '
 	rm .gitconfig &&
-	rm .git-repo/gitconfig &&
-	git-repo --version &&
+	rm .git-repo-go/gitconfig &&
+	git-repo-go --version &&
 	test -f .gitconfig &&
-	test -f .git-repo/gitconfig &&
+	test -f .git-repo-go/gitconfig &&
 	cat >expect <<-EOF &&
-	$HOME/.git-repo/gitconfig
+	$HOME/.git-repo-go/gitconfig
 	EOF
 	git config --global --get-all include.path >actual &&
 	test_cmp expect actual &&
@@ -44,49 +44,49 @@ test_expect_success "install git config by running git-repo --version" '
 	cherry-pick
 	status
 	EOF
-	git config -f .git-repo/gitconfig alias.br  >actual &&
-	git config -f .git-repo/gitconfig alias.ci >>actual &&
-	git config -f .git-repo/gitconfig alias.co >>actual &&
-	git config -f .git-repo/gitconfig alias.cp >>actual &&
-	git config -f .git-repo/gitconfig alias.st >>actual &&
+	git config -f .git-repo-go/gitconfig alias.br  >actual &&
+	git config -f .git-repo-go/gitconfig alias.ci >>actual &&
+	git config -f .git-repo-go/gitconfig alias.co >>actual &&
+	git config -f .git-repo-go/gitconfig alias.cp >>actual &&
+	git config -f .git-repo-go/gitconfig alias.st >>actual &&
 	test_cmp expect actual
 '
 
-test_expect_success "install git config by running git-repo version" '
+test_expect_success "install git config by running git-repo-go version" '
 	rm .gitconfig &&
-	rm .git-repo/gitconfig &&
-	git-repo version &&
+	rm .git-repo-go/gitconfig &&
+	git-repo-go version &&
 	test -f .gitconfig &&
-	test -f .git-repo/gitconfig &&
+	test -f .git-repo-go/gitconfig &&
 	cat >expect <<-EOF &&
 	status
 	EOF
-	git config -f .git-repo/gitconfig alias.st >actual &&
+	git config -f .git-repo-go/gitconfig alias.st >actual &&
 	test_cmp expect actual
 '
 
-test_expect_success "reinstall .git-repo/gitconfig by git-repo --version" '
-	rm .git-repo/gitconfig &&
+test_expect_success "reinstall .git-repo-go/gitconfig by git-repo-go --version" '
+	rm .git-repo-go/gitconfig &&
 	test -f .gitconfig &&
-	git-repo --version &&
-	test -f .git-repo/gitconfig &&
+	git-repo-go --version &&
+	test -f .git-repo-go/gitconfig &&
 	cat >expect <<-EOF &&
 	status
 	EOF
-	git config -f .git-repo/gitconfig alias.st >actual &&
+	git config -f .git-repo-go/gitconfig alias.st >actual &&
 	test_cmp expect actual
 
 '
 
-test_expect_success "reinstall .git-repo/gitconfig by git-repo version" '
-	rm .git-repo/gitconfig &&
+test_expect_success "reinstall .git-repo-go/gitconfig by git-repo-go version" '
+	rm .git-repo-go/gitconfig &&
 	test -f .gitconfig &&
-	git-repo version &&
-	test -f .git-repo/gitconfig &&
+	git-repo-go version &&
+	test -f .git-repo-go/gitconfig &&
 	cat >expect <<-EOF &&
 	status
 	EOF
-	git config -f .git-repo/gitconfig alias.st >actual &&
+	git config -f .git-repo-go/gitconfig alias.st >actual &&
 	test_cmp expect actual
 '
 
@@ -98,14 +98,14 @@ test_expect_success "include.path has bad file location" '
 	test_must_fail git config alias.pr
 '
 
-test_expect_success "fix wrong abs git repo config path" '
-	test -f .git-repo/gitconfig &&
+test_expect_success "fix wrong abs git repo-go go config path" '
+	test -f .git-repo-go/gitconfig &&
 	test -f .gitconfig &&
-	git-repo version &&
+	git-repo-go version &&
 	cat >expect <<-EOF &&
-	repo upload --single
+	repo-go upload --single
 	EOF
-	git config -f .git-repo/gitconfig alias.pr >actual &&
+	git config -f .git-repo-go/gitconfig alias.pr >actual &&
 	test_cmp expect actual
 '
 

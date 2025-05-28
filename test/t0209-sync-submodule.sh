@@ -3,7 +3,7 @@
 # Copyright (c) 2019 Jiang Xin
 #
 
-test_description='Test git repo sync with submoudles'
+test_description='Test git repo-go sync with submoudles'
 
 # Note: In order to allow link local repos for git-submodule,
 #       we need to enable file protocol, e.g.:
@@ -161,14 +161,14 @@ test_expect_success 'create manifest project' '
 	)
 '
 
-test_expect_success 'git repo sync and update submodules' '
+test_expect_success 'git repo-go go sync and update submodules' '
 	url="file://$HOME/repo/manifests.git" &&
 	touch .repo &&
 	mkdir work2 &&
 	(
 		cd work2 &&
-		git repo init -u "$url" &&
-		git repo sync \
+		git repo-go init -u "$url" &&
+		git repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"

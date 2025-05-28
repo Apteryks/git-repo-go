@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="git-repo helper proto --type agit"
+test_description="git-repo-go helper proto --type agit"
 
 . lib/test-lib.sh
 
@@ -47,7 +47,7 @@ test_expect_success "upload command (SSH protocol, verison 0)" '
 	  "Version": 1
 	}
 	EOF
-	git-repo helper proto --type agit --upload >actual 2>&1 &&
+	git-repo-go helper proto --type agit --upload >actual 2>&1 &&
 	test_cmp expect actual
 '
 
@@ -70,7 +70,7 @@ cat >expect <<EOF
 		"refs/heads/my/topic:refs/for/master/my/topic"
 	],
 	"env": [
-		"AGIT_FLOW=git-repo/n.n.n.n"
+		"AGIT_FLOW=git-repo-go/n.n.n.n"
 	]
 }
 EOF
@@ -96,8 +96,8 @@ test_expect_success "upload command (SSH protocol, verison 2)" '
 	  "Version": 1
 	}
 	EOF
-	git-repo helper proto --type agit --version 2 --upload >out 2>&1 &&
-	sed -e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" <out >actual &&
+	git-repo-go helper proto --type agit --version 2 --upload >out 2>&1 &&
+	sed -e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" <out >actual &&
 	test_cmp expect actual
 '
 
@@ -120,7 +120,7 @@ cat >expect <<EOF
 		"refs/heads/my/topic:refs/drafts/master/my/topic"
 	],
 	"env": [
-		"AGIT_FLOW=git-repo/n.n.n.n"
+		"AGIT_FLOW=git-repo-go/n.n.n.n"
 	]
 }
 EOF
@@ -146,8 +146,8 @@ test_expect_success "upload command (SSH protocol, draft, version 2)" '
 	  "Version": 1
 	}
 	EOF
-	git-repo helper proto --type agit --version 2 --upload >out 2>&1 &&
-	sed -e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" <out >actual &&
+	git-repo-go helper proto --type agit --version 2 --upload >out 2>&1 &&
+	sed -e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" <out >actual &&
 	test_cmp expect actual
 '
 
@@ -170,7 +170,7 @@ cat >expect <<EOF
 		"refs/heads/my/topic:refs/for/master/my/topic"
 	],
 	"gitconfig": [
-		"http.extraHeader=AGIT-FLOW: git-repo/n.n.n.n"
+		"http.extraHeader=AGIT-FLOW: git-repo-go/n.n.n.n"
 	]
 }
 EOF
@@ -196,8 +196,8 @@ test_expect_success "upload command (HTTP protocol, version 0)" '
 	  "Version": 1
 	}
 	EOF
-	git-repo helper proto --type agit --upload >out 2>&1 &&
-	sed -e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" <out >actual &&
+	git-repo-go helper proto --type agit --upload >out 2>&1 &&
+	sed -e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" <out >actual &&
 	test_cmp expect actual
 '
 
@@ -244,7 +244,7 @@ test_expect_success "upload command (SSH protocol with code review ID, version 0
 	  "Version": 1
 	}
 	EOF
-	git-repo helper proto --type agit --upload >actual 2>&1 &&
+	git-repo-go helper proto --type agit --upload >actual 2>&1 &&
 	test_cmp expect actual
 '
 
@@ -267,7 +267,7 @@ cat >expect <<EOF
 		"refs/heads/my/topic:refs/for-review/12345"
 	],
 	"env": [
-		"AGIT_FLOW=git-repo/n.n.n.n"
+		"AGIT_FLOW=git-repo-go/n.n.n.n"
 	]
 }
 EOF
@@ -293,8 +293,8 @@ test_expect_success "upload command (SSH protocol with code review ID, version 2
 	  "Version": 1
 	}
 	EOF
-	git-repo helper proto --type agit --version 2 --upload >out 2>&1 &&
-	sed -e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" <out >actual &&
+	git-repo-go helper proto --type agit --version 2 --upload >out 2>&1 &&
+	sed -e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" <out >actual &&
 	test_cmp expect actual
 '
 
@@ -319,7 +319,7 @@ cat >expect <<EOF
 		"refs/heads/my/topic:refs/heads/master"
 	],
 	"env": [
-		"AGIT_FLOW=git-repo/n.n.n.n"
+		"AGIT_FLOW=git-repo-go/n.n.n.n"
 	]
 }
 EOF
@@ -345,8 +345,8 @@ test_expect_success "upload command (SSH protocol with code review ID, version 3
 	  "Version": 1
 	}
 	EOF
-	git-repo helper proto --type agit --version 3 --upload >out 2>&1 &&
-	sed -e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" <out >actual &&
+	git-repo-go helper proto --type agit --version 3 --upload >out 2>&1 &&
+	sed -e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" <out >actual &&
 
 	test_cmp expect actual
 '
@@ -370,7 +370,7 @@ cat >expect <<EOF
 		"refs/heads/my/topic:refs/for-review/12345"
 	],
 	"gitconfig": [
-		"http.extraHeader=AGIT-FLOW: git-repo/n.n.n.n"
+		"http.extraHeader=AGIT-FLOW: git-repo-go/n.n.n.n"
 	]
 }
 EOF
@@ -396,14 +396,14 @@ test_expect_success "upload command (HTTP protocol with code review ID, draft)" 
 	  "Version": 1
 	}
 	EOF
-	git-repo helper proto --type agit --version 2 --upload >out 2>&1 &&
-	sed -e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" <out >actual &&
+	git-repo-go helper proto --type agit --version 2 --upload >out 2>&1 &&
+	sed -e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" <out >actual &&
 	test_cmp expect actual
 '
 
 test_expect_success "download MR 123456 (agit-v2)" '
 	printf "12345\n" | \
-	git-repo helper proto --type agit --version 2 --download >actual 2>&1 &&
+	git-repo-go helper proto --type agit --version 2 --download >actual 2>&1 &&
 	cat >expect <<-EOF &&
 		refs/merge-requests/12345/head
 	EOF
@@ -412,7 +412,7 @@ test_expect_success "download MR 123456 (agit-v2)" '
 
 test_expect_success "download CR 123 (agit-v3)" '
 	printf "123\n" | \
-	git-repo helper proto --type agit --version 3 --download >actual 2>&1 &&
+	git-repo-go helper proto --type agit --version 3 --download >actual 2>&1 &&
 	cat >expect <<-EOF &&
 		-o review=123
 		refs/changes/123/head
@@ -422,7 +422,7 @@ test_expect_success "download CR 123 (agit-v3)" '
 
 test_expect_success "download CR 123/2 (agit-v3)" '
 	printf "123/2\n" | \
-	git-repo helper proto --type agit --version 3 --download >actual 2>&1 &&
+	git-repo-go helper proto --type agit --version 3 --download >actual 2>&1 &&
 	cat >expect <<-EOF &&
 		-o review=123
 		refs/changes/123/2

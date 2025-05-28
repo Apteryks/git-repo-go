@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="git-repo init"
+test_description="git-repo-go init"
 
 . lib/test-lib.sh
 
@@ -13,10 +13,10 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo init -u" '
+test_expect_success "git-repo-go init -u" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url
+		git-repo-go init -u $manifest_url
 	)
 '
 
@@ -24,9 +24,9 @@ test_expect_success "check installed hooks" '
 	cat >expect<<-EOF &&
 	#!/bin/sh
 	EOF
-	head -1 .git-repo/hooks/commit-msg >actual &&
+	head -1 .git-repo-go/hooks/commit-msg >actual &&
 	test_cmp expect actual &&
-	test -x .git-repo/hooks/commit-msg
+	test -x .git-repo-go/hooks/commit-msg
 '
 
 test_expect_success "manifest points to default.xml" '
@@ -93,7 +93,7 @@ test_expect_success "test init in subdir" '
 		cd work &&
 		mkdir -p a/b/c &&
 		cd a/b/c &&
-		git-repo init -u $manifest_url &&
+		git-repo-go init -u $manifest_url &&
 		test ! -d .repo &&
 		cd "$HOME/work" &&
 		rm -rf a
@@ -103,7 +103,7 @@ test_expect_success "test init in subdir" '
 test_expect_success "switch file: test init -m <file>" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b master -m next.xml &&
+		git-repo-go init -u $manifest_url -b master -m next.xml &&
 		# manifest.xml => manifests/next.xml
 		test -f .repo/manifest.xml &&
 		echo manifests/next.xml >expect &&
@@ -122,7 +122,7 @@ test_expect_success "switch file: test init -m <file>" '
 test_expect_success "switch branch: maint, no rollback" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b Maint -m default.xml &&
+		git-repo-go init -u $manifest_url -b Maint -m default.xml &&
 		cat >expect<<-EOF &&
 		.repo/manifests/default.xml
 		EOF
@@ -148,7 +148,7 @@ test_expect_success "after switch, remote track: maint" '
 test_expect_success "no -b for repo init, use previous branch" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url &&
+		git-repo-go init -u $manifest_url &&
 		cat >expect <<-EOF &&
 		refs/heads/Maint
 		EOF
@@ -171,7 +171,7 @@ test_expect_success "detached manifest, drop default branch" '
 test_expect_success "switch branch: Maint, file: default.xml" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b Maint -m default.xml &&
+		git-repo-go init -u $manifest_url -b Maint -m default.xml &&
 		# manifest.xml => manifests/default.xml
 		echo manifests/default.xml >expect &&
 		readlink .repo/manifest.xml >actual &&
@@ -224,7 +224,7 @@ test_expect_success "detached manifest, drop default branch" '
 test_expect_success "switch to tag: v0.1" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b refs/tags/v0.1 &&
+		git-repo-go init -u $manifest_url -b refs/tags/v0.1 &&
 		(
 			cd .repo/manifests &&
 			test_must_fail git symbolic-ref HEAD &&
@@ -244,7 +244,7 @@ test_expect_success "switch to tag: v0.1" '
 test_expect_success "switch branch: master, next.xml is back" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b master &&
+		git-repo-go init -u $manifest_url -b master &&
 		# Has two xml files
 		ls .repo/manifests/*.xml >actual &&
 		cat >expect<<-EOF &&

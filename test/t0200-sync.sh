@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="test 'git-repo sync' basic"
+test_description="test 'git-repo-go sync' basic"
 
 . lib/test-lib.sh
 
@@ -13,11 +13,11 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo sync (-n)" '
+test_expect_success "git-repo-go sync (-n)" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url &&
-		git-repo sync -n
+		git-repo-go init -u $manifest_url &&
+		git-repo-go sync -n
 	)
 '
 
@@ -35,7 +35,7 @@ test_expect_success "manifests version: 2.0" '
 	)
 '
 
-test_expect_success "git-repo sync (-n), no checkout" '
+test_expect_success "git-repo-go sync (-n), no checkout" '
 	(
 		cd work &&
 		test ! -d main &&
@@ -92,10 +92,10 @@ test_expect_success "check size of .repo/projects" '
 	)
 '
 
-test_expect_success "git-repo sync (-l)" '
+test_expect_success "git-repo-go sync (-l)" '
 	(
 		cd work &&
-		git-repo sync -l \
+		git-repo-go sync -l \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -115,7 +115,7 @@ test_expect_success "no gerrit hooks for agit projects" '
 	)
 '
 
-test_expect_success "git-repo sync (-l), checkouted" '
+test_expect_success "git-repo-go sync (-l), checkouted" '
 	(
 		cd work &&
 		test -f main/VERSION &&
@@ -155,14 +155,14 @@ test_expect_success "copy and link files" '
 	)
 '
 
-test_expect_success "disable git-repo" '
+test_expect_success "disable git-repo-go" '
 	(
 		cd work/.repo/manifests.git &&
 		git config app.git.repo.disabled true &&
 		cd ../.. &&
-		test_must_fail git repo init >actual 2>&1 &&
+		test_must_fail git repo-go init >actual 2>&1 &&
 		cat >expect<<-EOF &&
-		Error: git-repo is disabled for this workspace, use repo instead
+		Error: git-repo-go is disabled for this workspace, use repo-go instead
 		EOF
 		test_cmp expect actual
 	)

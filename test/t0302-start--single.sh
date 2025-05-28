@@ -13,11 +13,11 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo init" '
+test_expect_success "git-repo-go init" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -g all -b Maint &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url -g all -b Maint &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -27,7 +27,7 @@ test_expect_success "git-repo init" '
 test_expect_success "fail: cannot run start --single" '
 	(
 		cd work/main &&
-		test_must_fail git-repo start --single --all my/topic1
+		test_must_fail git-repo-go start --single --all my/topic1
 	) >actual 2>&1 &&
 	cat >expect <<-EOF &&
 	FATAL: cannot run in single mode

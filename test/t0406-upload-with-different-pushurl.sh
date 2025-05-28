@@ -13,11 +13,11 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo init & sync" '
+test_expect_success "git-repo-go init & sync" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -g all -b Maint &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url -g all -b Maint &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"pushurl\":\"https://git.example.com/git\", \"type\":\"agit\", \"version\":2}"
@@ -27,7 +27,7 @@ test_expect_success "git-repo init & sync" '
 test_expect_success "new commit in my/topic1" '
 	(
 		cd work/main &&
-		git repo start --all my/topic1 &&
+		git repo-go start --all my/topic1 &&
 		echo hack >topic1.txt &&
 		git add topic1.txt &&
 		test_tick &&
@@ -61,12 +61,12 @@ test_expect_success "use pushurl in manifest remotes" '
 		         <hash>
 		to https://example.com (y/N)? Yes
 		NOTE: main> will execute command: git push ssh://committer@aone.example.com/agit/main.git refs/heads/my/topic1:refs/for/Maint/my/topic1
-		NOTE: main> with extra environment: AGIT_FLOW=git-repo/n.n.n.n
+		NOTE: main> with extra environment: AGIT_FLOW=git-repo-go/n.n.n.n
 		NOTE: main> with extra environment: GIT_SSH_COMMAND=ssh -o SendEnv=AGIT_FLOW
 		
 		----------------------------------------------------------------------
 		EOF
-		git-repo upload \
+		git-repo-go upload \
 			--assume-yes \
 			--no-cache \
 			--no-edit \
@@ -76,7 +76,7 @@ test_expect_success "use pushurl in manifest remotes" '
 			"{\"type\":\"agit\", \"version\":2}" \
 			>out 2>&1 &&
 		sed -e "s/[0-9a-f]\{40\}/<hash>/g" \
-			-e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" \
+			-e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" \
 			-e "s#///.*/hello/main.git#///path/to/hello/main.git#g" \
 			<out >actual &&
 		test_cmp expect actual
@@ -103,13 +103,13 @@ test_expect_success "pushurl in manifest override ssh-info response" '
 		         <hash>
 		to https://example.com (y/N)? Yes
 		NOTE: main> will execute command: git push -o old-oid=<hash> ssh://committer@aone.example.com/agit/main.git refs/heads/my/topic1:refs/for/Maint/my/topic1
-		NOTE: main> with extra environment: AGIT_FLOW=git-repo/n.n.n.n
+		NOTE: main> with extra environment: AGIT_FLOW=git-repo-go/n.n.n.n
 		NOTE: main> with extra environment: GIT_SSH_COMMAND=ssh -o SendEnv=AGIT_FLOW
 		NOTE: main> will update-ref refs/published/my/topic1 on refs/heads/my/topic1, reason: review from my/topic1 to Maint on https://example.com
 		
 		----------------------------------------------------------------------
 		EOF
-		git-repo upload \
+		git-repo-go upload \
 			--dryrun \
 			--assume-yes \
 			--no-cache \
@@ -120,7 +120,7 @@ test_expect_success "pushurl in manifest override ssh-info response" '
 			"{\"type\":\"agit\", \"version\":2, \"pushurl\":\"https://<email>@git.example.com/agit\"}" \
 			>out 2>&1 &&
 		sed -e "s/[0-9a-f]\{40\}/<hash>/g" \
-			-e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" \
+			-e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" \
 			-e "s#///.*/hello/main.git#///path/to/hello/main.git#g" \
 			<out >actual &&
 		test_cmp expect actual
@@ -140,12 +140,12 @@ test_expect_success "use pushurl in ssh-info response" '
 		         <hash>
 		         <hash>
 		to https://example.com (y/N)? Yes
-		NOTE: main> will execute command: git -c http.extraHeader=AGIT-FLOW: git-repo/n.n.n.n push -o old-oid=<hash> https://committer@git.example.com/agit/main.git refs/heads/my/topic1:refs/for/Maint/my/topic1
+		NOTE: main> will execute command: git -c http.extraHeader=AGIT-FLOW: git-repo-go/n.n.n.n push -o old-oid=<hash> https://committer@git.example.com/agit/main.git refs/heads/my/topic1:refs/for/Maint/my/topic1
 		NOTE: main> will update-ref refs/published/my/topic1 on refs/heads/my/topic1, reason: review from my/topic1 to Maint on https://example.com
 		
 		----------------------------------------------------------------------
 		EOF
-		git-repo upload \
+		git-repo-go upload \
 			--dryrun \
 			--assume-yes \
 			--no-cache \
@@ -156,7 +156,7 @@ test_expect_success "use pushurl in ssh-info response" '
 			"{\"type\":\"agit\", \"version\":2, \"pushurl\":\"https://<email>@git.example.com/agit\"}" \
 			>out 2>&1 &&
 		sed -e "s/[0-9a-f]\{40\}/<hash>/g" \
-			-e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" \
+			-e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" \
 			-e "s#///.*/hello/main.git#///path/to/hello/main.git#g" \
 			<out >actual &&
 		test_cmp expect actual

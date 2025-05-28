@@ -70,8 +70,8 @@ test_expect_success "fail to sync: empty name attr in project" '
 	(
 		mkdir work1 &&
 		cd work1 &&
-		git-repo init -u "$manifest_url" &&
-		test_must_fail git-repo sync \
+		git-repo-go init -u "$manifest_url" &&
+		test_must_fail git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}" >out 2>&1 &&
@@ -125,8 +125,8 @@ test_expect_success "fail to sync: empty name attr in remote element" '
 	(
 		mkdir work2 &&
 		cd work2 &&
-		git-repo init -u "$manifest_url" &&
-		test_must_fail git-repo sync \
+		git-repo-go init -u "$manifest_url" &&
+		test_must_fail git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}" >out 2>&1 &&
@@ -179,8 +179,8 @@ test_expect_success "sync ok for project without path attr" '
 	(
 		mkdir work3 &&
 		cd work3 &&
-		git-repo init -u "$manifest_url" &&
-		git-repo sync \
+		git-repo-go init -u "$manifest_url" &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}" &&

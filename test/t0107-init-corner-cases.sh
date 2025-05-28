@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="git-repo init corner cases"
+test_description="git-repo-go init corner cases"
 
 . lib/test-lib.sh
 
@@ -13,10 +13,10 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo init -u -b refs/tags/v0.1" '
+test_expect_success "git-repo-go init -u -b refs/tags/v0.1" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b refs/tags/v0.1 &&
+		git-repo-go init -u $manifest_url -b refs/tags/v0.1 &&
 		(
 			cd .repo/manifests &&
 			git describe --tags
@@ -52,10 +52,10 @@ test_expect_success "new commit in manifests" '
 	COMMIT_TIP=$(git -C work/.repo/manifests rev-parse HEAD)
 '
 
-test_expect_success "git-repo sync" '
+test_expect_success "git-repo-go sync" '
 	(
 		cd work &&
-		git-repo sync \
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -76,10 +76,10 @@ test_expect_success "manifests project is still detached after sync" '
 	)
 '
 
-test_expect_success "git-repo init -u -b refs/tags/v0.2" '
+test_expect_success "git-repo-go init -u -b refs/tags/v0.2" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b refs/tags/v0.2 &&
+		git-repo-go init -u $manifest_url -b refs/tags/v0.2 &&
 		(
 			cd .repo/manifests &&
 			git describe --tags
@@ -117,10 +117,10 @@ test_expect_success "new commit in manifests" '
 	)
 '
 
-test_expect_success "git-repo init -u -b master" '
+test_expect_success "git-repo-go init -u -b master" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b master &&
+		git-repo-go init -u $manifest_url -b master &&
 		(
 			cd .repo/manifests &&
 			git describe --tags
@@ -148,10 +148,10 @@ test_expect_success "manifests project checkout to default branch" '
 	)
 '
 
-test_expect_success "git-repo sync" '
+test_expect_success "git-repo-go sync" '
 	(
 		cd work &&
-		git-repo sync \
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -186,12 +186,12 @@ test_expect_success "new commit in manifests" '
 	)
 '
 
-test_expect_success "git-repo init -u -b refs/tags/v0.1 failed" '
+test_expect_success "git-repo-go init -u -b refs/tags/v0.1 failed" '
 	(
 		cd work &&
-		test_must_fail git-repo init -u $manifest_url -b refs/tags/v0.1 >actual 2>&1 &&
+		test_must_fail git-repo-go init -u $manifest_url -b refs/tags/v0.1 >actual 2>&1 &&
 		cat >expect <<-EOF &&
-		Error: add --detach option to \`git repo init\` to throw away changes in '"'"'.repo/manifests'"'"'
+		Error: add --detach option to \`git repo-go init\` to throw away changes in '"'"'.repo/manifests'"'"'
 		EOF
 		test_cmp expect actual
 	)
@@ -207,10 +207,10 @@ test_expect_success "remove new commit in manifests" '
 	)
 '
 
-test_expect_success "git-repo init -u -b refs/tags/v0.1" '
+test_expect_success "git-repo-go init -u -b refs/tags/v0.1" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b refs/tags/v0.1 &&
+		git-repo-go init -u $manifest_url -b refs/tags/v0.1 &&
 		(
 			cd .repo/manifests &&
 			git describe --tags
@@ -239,10 +239,10 @@ test_expect_success "still in default branch, but no tracking branch" '
 	)
 '
 
-test_expect_success "git-repo sync" '
+test_expect_success "git-repo-go sync" '
 	(
 		cd work &&
-		test_must_fail git-repo sync \
+		test_must_fail git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -287,10 +287,10 @@ test_expect_success "new commit in manifests" '
 	)
 '
 
-test_expect_success "git-repo init -u -b refs/heads/Maint" '
+test_expect_success "git-repo-go init -u -b refs/heads/Maint" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b refs/heads/Maint &&
+		git-repo-go init -u $manifest_url -b refs/heads/Maint &&
 		(
 			cd .repo/manifests &&
 			git describe --tags
@@ -330,12 +330,12 @@ test_expect_success "new commit in manifests" '
 	)
 '
 
-test_expect_success "git-repo init -u -b master failed" '
+test_expect_success "git-repo-go init -u -b master failed" '
 	(
 		cd work &&
-		test_must_fail git-repo init -u $manifest_url -b master >actual 2>&1 &&
+		test_must_fail git-repo-go init -u $manifest_url -b master >actual 2>&1 &&
 		cat >expect <<-EOF &&
-		Error: add --detach option to \`git repo init\` to throw away changes in '"'"'.repo/manifests'"'"'
+		Error: add --detach option to \`git repo-go init\` to throw away changes in '"'"'.repo/manifests'"'"'
 		EOF
 		test_cmp expect actual
 	)
@@ -357,10 +357,10 @@ test_expect_success "Still tracking remote Maint branch" '
 	)
 '
 
-test_expect_success "git-repo init -b master --detach" '
+test_expect_success "git-repo-go init -b master --detach" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b master --detach &&
+		git-repo-go init -u $manifest_url -b master --detach &&
 		(
 			cd .repo/manifests &&
 			git describe --tags

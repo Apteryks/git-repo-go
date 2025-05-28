@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="test 'git-repo sync' basic"
+test_description="test 'git-repo-go sync' basic"
 
 . lib/test-lib.sh
 
@@ -13,11 +13,11 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo sync (-n)" '
+test_expect_success "git-repo-go sync (-n)" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url &&
-		git-repo sync -n
+		git-repo-go init -u $manifest_url &&
+		git-repo-go sync -n
 	)
 '
 
@@ -37,10 +37,10 @@ test_expect_success "beforce sync local-half, gerrit hooks are not installed" '
 	)
 '
 
-test_expect_success "git-repo sync (-l), server has gerrit response" '
+test_expect_success "git-repo-go sync (-l), server has gerrit response" '
 	(
 		cd work &&
-		git-repo sync -l \
+		git-repo-go sync -l \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"ssh.example.com 29418"

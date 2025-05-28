@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="git-repo sync multiple jobs test"
+test_description="git-repo-go sync multiple jobs test"
 
 . lib/test-lib.sh
 
@@ -16,72 +16,72 @@ test_expect_success "setup" '
 test_expect_success "init with multiple jobs" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url
+		git-repo-go init -u $manifest_url
 	)
 '
 
-test_expect_success "git-repo sync (-n), default jobs" '
+test_expect_success "git-repo-go sync (-n), default jobs" '
 	(
 		cd work &&
-		git-repo sync -n
+		git-repo-go sync -n
 	)
 '
 
-test_expect_success "git-repo sync (-n), 100 jobs" '
+test_expect_success "git-repo-go sync (-n), 100 jobs" '
 	(
 		cd work &&
-		git-repo sync -n -j 100
+		git-repo-go sync -n -j 100
 	)
 '
 
-test_expect_success "git-repo sync (-n), 1 job" '
+test_expect_success "git-repo-go sync (-n), 1 job" '
 	(
 		cd work &&
-		git-repo sync -n -j 1
+		git-repo-go sync -n -j 1
 	)
 '
 
-test_expect_success "git-repo sync (-n), 0 job" '
+test_expect_success "git-repo-go sync (-n), 0 job" '
 	(
 		cd work &&
-		git-repo sync -n -j 0
+		git-repo-go sync -n -j 0
 	)
 '
 
-test_expect_success "git-repo sync (-l), default jobs" '
+test_expect_success "git-repo-go sync (-l), default jobs" '
 	(
 		cd work &&
-		git-repo sync -l \
+		git-repo-go sync -l \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
 	)
 '
 
-test_expect_success "git-repo sync (-l), 0 job" '
+test_expect_success "git-repo-go sync (-l), 0 job" '
 	(
 		cd work &&
-		git-repo sync -l -j 0 \
+		git-repo-go sync -l -j 0 \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
 	)
 '
 
-test_expect_success "git-repo sync (-l), 1 job" '
+test_expect_success "git-repo-go sync (-l), 1 job" '
 	(
 		cd work &&
-		git-repo sync -l -j 1 \
+		git-repo-go sync -l -j 1 \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
 	)
 '
 
-test_expect_success "git-repo sync (-l), 100 jobs" '
+test_expect_success "git-repo-go sync (-l), 100 jobs" '
 	(
 		cd work &&
-		git-repo sync -l -j 100 \
+		git-repo-go sync -l -j 100 \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"

@@ -74,7 +74,7 @@ func (v AGitProtoHelper) GetGitPushCommand(o *config.UploadOptions) (*GitPushCom
 		return nil, fmt.Errorf("bad review URL: %s", o.RemoteURL)
 	}
 
-	gitRepoAgent := "git-repo" + "/" + version.GetVersion()
+	gitRepoAgent := "git-repo-go" + "/" + version.GetVersion()
 	if gitURL.IsSSH() {
 		switch v.sshInfo.ProtoVersion {
 		case 0:

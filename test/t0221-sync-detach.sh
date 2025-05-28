@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="git-repo sync --detach"
+test_description="git-repo-go sync --detach"
 
 . lib/test-lib.sh
 
@@ -73,11 +73,11 @@ test_expect_success "setup repositories: app2" '
 	)
 '
 
-test_expect_success "git-repo sync" '
+test_expect_success "git-repo-go sync" '
 	(
 		cd work &&
-		git-repo init -u "$manifest_url" &&
-		git-repo sync \
+		git-repo-go init -u "$manifest_url" &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -104,7 +104,7 @@ test_expect_success "projects are in detached mode" '
 test_expect_success "start to create new branch" '
 	(
 		cd work &&
-		git repo start --all jx/topic &&
+		git repo-go start --all jx/topic &&
 		(
 			cd app1 &&
 			git symbolic-ref HEAD &&
@@ -122,7 +122,7 @@ test_expect_success "start to create new branch" '
 test_expect_success "sync --detached" '
 	(
 		cd work &&
-		git repo sync --detach \
+		git repo-go sync --detach \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}" &&
@@ -143,7 +143,7 @@ test_expect_success "sync --detached" '
 test_expect_success "switch branch" '
 	(
 		cd work &&
-		git repo start --all jx/topic &&
+		git repo-go start --all jx/topic &&
 		(
 			cd app1 &&
 			git symbolic-ref HEAD &&
@@ -161,7 +161,7 @@ test_expect_success "switch branch" '
 test_expect_success "edit and new commit" '
 	(
 		cd work &&
-		git repo start --all jx/topic &&
+		git repo-go start --all jx/topic &&
 		(
 			cd app1 &&
 			cat >VERSION <<-EOF &&
@@ -210,7 +210,7 @@ test_expect_success "edit and new commit" '
 test_expect_success "sync --detached" '
 	(
 		cd work &&
-		git repo sync --detach \
+		git repo-go sync --detach \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}" &&
@@ -288,7 +288,7 @@ test_expect_success "new commit in app2" '
 test_expect_success "sync --detached again" '
 	(
 		cd work &&
-		git repo sync --detach \
+		git repo-go sync --detach \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}" &&

@@ -13,11 +13,11 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo sync with history version of manifests" '
+test_expect_success "git-repo-go sync with history version of manifests" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b refs/tags/v0.1 &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url -b refs/tags/v0.1 &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}" &&
@@ -78,10 +78,10 @@ test_expect_success "verify checkout commits of v0.1" '
 '
 
 
-test_expect_success "git-repo sync again" '
+test_expect_success "git-repo-go sync again" '
 	(
 		cd work &&
-		git-repo sync \
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"

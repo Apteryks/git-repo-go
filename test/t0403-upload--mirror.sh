@@ -13,11 +13,11 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo init" '
+test_expect_success "git-repo-go init" '
 	(
 		cd work &&
-		git-repo init --mirror -u $manifest_url -g all -b Maint &&
-		git-repo sync \
+		git-repo-go init --mirror -u $manifest_url -g all -b Maint &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}" \
@@ -28,7 +28,7 @@ test_expect_success "git-repo init" '
 test_expect_success "fail: cannot run upload used with --mirror" '
 	(
 		cd work/main.git &&
-		test_must_fail git-repo upload \
+		test_must_fail git-repo-go upload \
 			-v \
 			--assume-no \
 			--no-edit \

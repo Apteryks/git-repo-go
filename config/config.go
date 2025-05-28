@@ -45,7 +45,7 @@ var (
 const (
 	GIT = "git"
 
-	DefaultConfigDir = ".git-repo"
+	DefaultConfigDir = ".git-repo-go"
 	DefaultLogRotate = 20 * 1024 * 1024
 	DefaultLogLevel  = "warn"
 
@@ -80,7 +80,7 @@ const (
 
 	MaxJobs = 32
 
-	ViperEnvPrefix = "GIT_REPO"
+	ViperEnvPrefix = "GIT_REPO_GO"
 )
 
 // AssumeNo gets --asume-no option.
@@ -108,7 +108,7 @@ func IsSingleMode() bool {
 	return viper.GetBool("single")
 }
 
-// GetConfigDir returns ~/.git-repo dir
+// GetConfigDir returns ~/.git-repo-go dir
 func GetConfigDir() (string, error) {
 	home, err := homedir.Dir()
 	if err != nil {

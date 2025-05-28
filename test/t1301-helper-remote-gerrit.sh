@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="git-repo helper proto --type gerrit"
+test_description="git-repo-go helper proto --type gerrit"
 
 . lib/test-lib.sh
 
@@ -37,7 +37,7 @@ test_expect_success "upload command (SSH protocol)" '
 	  "Version": 1
 	}
 	EOF
-	git-repo helper proto --type gerrit --upload >actual 2>&1 &&
+	git-repo-go helper proto --type gerrit --upload >actual 2>&1 &&
 	test_cmp expect actual
 '
 
@@ -73,7 +73,7 @@ test_expect_success "upload command (SSH protocol, draft)" '
 	  "Version": 1
 	}
 	EOF
-	git-repo helper proto --type gerrit --upload >actual 2>&1 &&
+	git-repo-go helper proto --type gerrit --upload >actual 2>&1 &&
 	test_cmp expect actual
 '
 
@@ -109,7 +109,7 @@ test_expect_success "upload command (HTTP protocol)" '
 	  "Version": 1
 	}
 	EOF
-	git-repo helper proto --type gerrit --upload >actual 2>&1 &&
+	git-repo-go helper proto --type gerrit --upload >actual 2>&1 &&
 	test_cmp expect actual
 '
 
@@ -138,7 +138,7 @@ test_expect_success "upload command (SSH protocol with code review ID)" '
 	  "Version": 1
 	}
 	EOF
-	test_must_fail git-repo helper proto --type gerrit --upload >actual 2>&1 &&
+	test_must_fail git-repo-go helper proto --type gerrit --upload >actual 2>&1 &&
 	test_cmp expect actual
 '
 
@@ -167,7 +167,7 @@ test_expect_success "upload command (HTTP protocol with code review ID, draft)" 
 	  "Version": 1
 	}
 	EOF
-	test_must_fail git-repo helper proto --type gerrit --upload >actual 2>&1 &&
+	test_must_fail git-repo-go helper proto --type gerrit --upload >actual 2>&1 &&
 	test_cmp expect actual
 '
 
@@ -178,7 +178,7 @@ EOF
 
 test_expect_success "download ref (no patch)" '
 	printf "12345\n" | \
-	git-repo helper proto --type gerrit --download >actual 2>&1 &&
+	git-repo-go helper proto --type gerrit --download >actual 2>&1 &&
 	test_cmp expect actual
 '
 
@@ -188,7 +188,7 @@ EOF
 
 test_expect_success "download ref (with patch)" '
 	printf "12345 2\n" | \
-	git-repo helper proto --type gerrit --download >actual 2>&1 &&
+	git-repo-go helper proto --type gerrit --download >actual 2>&1 &&
 	test_cmp expect actual
 '
 

@@ -290,7 +290,8 @@ func (v Repository) Raw() *git.Repository {
 
 	v.raw, err = git.PlainOpen(v.CommonDir())
 	if err != nil {
-		log.Errorf("cannot open git repo '%s': %s", v.RepoDir(), err)
+		log.Errorf("cannot open git repository '%s': %s",
+			v.RepoDir(), err)
 		return nil
 	}
 	return v.raw

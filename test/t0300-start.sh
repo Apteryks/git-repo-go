@@ -13,11 +13,11 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo init" '
+test_expect_success "git-repo-go init" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -g all -b Maint &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url -g all -b Maint &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -27,7 +27,7 @@ test_expect_success "git-repo init" '
 test_expect_success "create branch: my/topic1" '
 	(
 		cd work &&
-		git-repo start --all my/topic1
+		git-repo-go start --all my/topic1
 	)
 '
 
@@ -87,7 +87,7 @@ test_expect_success "create new commit in app1" '
 test_expect_success "create new branch my/topic2" '
 	(
 		cd work &&
-		git-repo start --all my/topic2
+		git-repo-go start --all my/topic2
 	)
 '
 
@@ -109,7 +109,7 @@ test_expect_success "check current commit of app1" '
 test_expect_success "switch back to my/topic1" '
 	(
 		cd work &&
-		git-repo start --all my/topic1
+		git-repo-go start --all my/topic1
 	)
 '
 

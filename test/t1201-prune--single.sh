@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="test 'git-repo prune'"
+test_description="test 'git-repo-go prune'"
 
 . lib/test-lib.sh
 
@@ -34,11 +34,11 @@ test_expect_success "create branches" '
 	)
 '
 
-test_expect_success "git-repo prune all" '
+test_expect_success "git-repo-go prune all" '
 	(
 		cd work/main &&
 		test -d .git &&
-		git-repo prune --single
+		git-repo-go prune --single
 	) >actual 2>&1 &&
 	cat >expect<<-EOF &&
 	Pruned branches (already merged)

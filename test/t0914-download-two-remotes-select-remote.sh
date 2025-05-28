@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="test git-repo download: two remotes, select origin using --remote"
+test_description="test git-repo-go download: two remotes, select origin using --remote"
 
 . lib/test-lib.sh
 
@@ -30,7 +30,7 @@ test_expect_success "add two remotes" '
 test_expect_success "fail to download without --remote" '
 	(
 		cd work/main &&
-		test_must_fail git-repo download --single \
+		test_must_fail git-repo-go download --single \
 			--no-cache \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
@@ -46,7 +46,7 @@ test_expect_success "fail to download without --remote" '
 test_expect_success "download with --remote" '
 	(
 		cd work/main &&
-		git-repo download --single \
+		git-repo-go download --single \
 			--remote 2nd \
 			--no-cache \
 			--mock-ssh-info-status 200 \

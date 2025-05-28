@@ -15,7 +15,7 @@ import (
 func TestProjectGitInit(t *testing.T) {
 	assert := assert.New(t)
 
-	tmpdir, err := os.MkdirTemp("", "git-repo-")
+	tmpdir, err := os.MkdirTemp("", "git-repo-go-")
 	if err != nil {
 		panic(err)
 	}
@@ -76,7 +76,7 @@ func TestProjectMatchGroups(t *testing.T) {
 	var mGroups string
 	assert := assert.New(t)
 
-	tmpdir, err := os.MkdirTemp("", "git-repo-")
+	tmpdir, err := os.MkdirTemp("", "git-repo-go-")
 	if err != nil {
 		panic(err)
 	}

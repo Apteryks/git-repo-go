@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="test 'git-repo download' basic"
+test_description="test 'git-repo-go download' basic"
 
 . lib/test-lib.sh
 
@@ -21,7 +21,7 @@ test_expect_success "setup" '
 test_expect_success "bad review url" '
 	(
 		cd work/main &&
-		test_must_fail git-repo download --single \
+		test_must_fail git-repo-go download --single \
 			--no-cache \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
@@ -44,7 +44,7 @@ test_expect_success "set review-url" '
 test_expect_success "download and checkout" '
 	(
 		cd work/main &&
-		git-repo download --single \
+		git-repo-go download --single \
 			--no-cache \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
@@ -70,7 +70,7 @@ test_expect_success "download and checkout" '
 test_expect_success "download again with already merged notice" '
 	(
 		cd work/main &&
-		git-repo download --single \
+		git-repo-go download --single \
 			--no-cache \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
@@ -102,7 +102,7 @@ test_expect_success "download using cherry-pick" '
 		cd work/main &&
 		git checkout jx/topic &&
 		git reset --quiet --hard origin/Maint &&
-		git-repo download --single \
+		git-repo-go download --single \
 			--no-cache \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
@@ -129,7 +129,7 @@ test_expect_success "download failed using ff-only" '
 	(
 		cd work/main &&
 		git reset --quiet --hard origin/Maint &&
-		test_must_fail git-repo download --single \
+		test_must_fail git-repo-go download --single \
 			--no-cache \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \

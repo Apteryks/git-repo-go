@@ -351,7 +351,7 @@ func (v Project) SyncLocalHalf(o *CheckoutOptions) error {
 		trackid, err := v.ResolveRemoteTracking(track)
 		localChanges, err := v.Revlist(headid, "--not", trackid)
 		if len(localChanges) > 0 {
-			return fmt.Errorf("add --detach option to `git repo init` to throw away changes in '.repo/manifests'")
+			return fmt.Errorf("add --detach option to `git repo-go init` to throw away changes in '.repo/manifests'")
 		}
 		err = v.HardReset(revid)
 		if err != nil {

@@ -1,5 +1,5 @@
 *.swp
-git-repo
+git-repo-go
 REPO-VERSION-FILE
 
 # Binaries for programs and plugins

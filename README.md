@@ -1,38 +1,39 @@
 [![Build Status](https://github.com/Apteryks/git-repo-go/actions/workflows/go.yml/badge.svg)](https://github.com/alibaba/git-repo-go/actions/workflows/go.yml)
 
-## git-repo
+## git-repo-go
 
 **repo reimplemented in Golang and many others**
 
-`git-repo` is `repo` reimplemented in Golang and with many other features.
-Using `git-repo`, a developer can create code reviews (pull requests) from
-client side directly.  There will be no fork, no feature branches, and no
-write permission needed.
+`git-repo-go` is `repo` reimplemented in Golang and with many other
+features.  Using `git-repo-go`, a developer can create code reviews
+(pull requests) from client side directly.  There will be no fork, no
+feature branches, and no write permission needed.
 
-`git-repo` is a command line tool, which adds more sub-commands to git,
+`git-repo-go` is a command line tool, which adds more sub-commands to git,
 and works for centralized git workflow like Gerrit, agit-flow of Alibaba.com,
 and other agit-flow alike protocols...
 
 
 ## Installation
 
-Download or compile the binary of `git-repo` from this repository, and install
-(copy) the executable of `git-repo` to proper location, such as `/usr/bin` of
-Linux and MacOS, and `C:\Windows\system32` of Windows.
+Download or compile the binary of `git-repo-go` from this repository,
+and install (copy) the executable of `git-repo-go` to proper location,
+such as `/usr/bin` of Linux and MacOS, and `C:\Windows\system32` of
+Windows.
 
 After installation, execute the following command to validate the installation:
 
-    git repo version
+    git repo-go version
 
 
-## Git aliases installed from git-repo
+## Git aliases installed from git-repo-go
 
-`git-repo` installs some useful git configurations for user, some unique alias
-commands are:
+`git-repo-go` installs some useful git configurations for user, some
+unique alias commands are:
 
-    git peer-review => git repo upload --single
-    git pr => git repo upload --single
-    git download => git repo download --single
+    git peer-review => git repo-go upload --single
+    git pr => git repo-go upload --single
+    git download => git repo-go download --single
 
 
 ## Single repository mode
@@ -56,7 +57,7 @@ commands are:
 There are many options for git pr (or git peer-review, or git review), please
 check the manual:
 
-        git repo upload --help
+        git repo-go upload --help
 
 
 ### Download code-review to local repository for review
@@ -88,20 +89,20 @@ If a reviewer wants to update a code-review, he or she can run:
 
 ## Multiple repositories
 
-`git-repo` supports android style multiple repositories management.
+`git-repo-go` supports android style multiple repositories management.
 
 * Init workspace from a manifest project.
 
-        git repo init <manifest-url>
+        git repo-go init <manifest-url>
 
 * Clone / update all repositories referenced in the manifest repository.
 
-        git repo sync
+        git repo-go sync
 
 * Create a local working branch instead of detached HEAD on all repositories.
 
-        git repo start --all some/topic
+        git repo-go start --all some/topic
 
 * Send changes to remote server to create code reviews.
 
-        git repo upload
+        git repo-go upload

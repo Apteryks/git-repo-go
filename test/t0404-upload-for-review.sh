@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="test 'git-repo download' basic"
+test_description="test 'git-repo-go download' basic"
 
 . lib/test-lib.sh
 
@@ -13,20 +13,20 @@ test_expect_success "setup" '
 	mkdir work &&
 	(
 		cd work &&
-		git-repo init -u $manifest_url &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url &&
+		git-repo-go sync \
 			--no-cache \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\", \"version\":2}" &&
-		git-repo start --all jx/topic
+		git-repo-go start --all jx/topic
 	)
 '
 
 test_expect_success "download and checkout" '
 	(
 		cd work &&
-		git-repo download \
+		git-repo-go download \
 			--no-cache \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
@@ -92,14 +92,14 @@ NOTE: no editor, input data unchanged
 #         <hash>
 
 NOTE: will execute command: git push -o old-oid=<hash> ssh://git@ssh.example.com/repository/main.git refs/heads/review:refs/for-review/12345
-NOTE: with extra environment: AGIT_FLOW=git-repo/n.n.n.n
+NOTE: with extra environment: AGIT_FLOW=git-repo-go/n.n.n.n
 NOTE: with extra environment: GIT_SSH_COMMAND=ssh -o SendEnv=AGIT_FLOW
 NOTE: will update-ref refs/merge-requests/12345/head on refs/heads/review, reason: update code review #12345 of http://example.com
 
 ----------------------------------------------------------------------
 EOF
 
-test_expect_success "git repo upload --single --change 12345" '
+test_expect_success "git repo-go upload --single --change 12345" '
 	(
 		cd work/main &&
 		git checkout -b review &&
@@ -111,7 +111,7 @@ test_expect_success "git repo upload --single --change 12345" '
 	) &&
 	(
 		cd work/main &&
-		git-repo upload \
+		git-repo-go upload \
 			--single \
 			--change 12345 \
 			--dryrun \
@@ -119,7 +119,7 @@ test_expect_success "git repo upload --single --change 12345" '
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\", \"version\":2}"
 	) >out 2>&1 &&
-	sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" <out >actual &&
+	sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" <out >actual &&
 	test_cmp expect actual
 '
 

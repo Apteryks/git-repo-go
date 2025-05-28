@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="test 'git-repo list'"
+test_description="test 'git-repo-go list'"
 
 . lib/test-lib.sh
 
@@ -13,18 +13,18 @@ test_expect_success "setup" '
 	mkdir work &&
 	(
 		cd work &&
-		git-repo init -u $manifest_url -g all -b Maint &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url -g all -b Maint &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
 	)
 '
 
-test_expect_success "git repo manifest: show manifest of Maint branch" '
+test_expect_success "git repo-go manifest: show manifest of Maint branch" '
 	(
 		cd work &&
-		git-repo manifest
+		git-repo-go manifest
 	) >actual &&
 	cat >expect<<-EOF &&
 	<manifest>
@@ -45,11 +45,11 @@ test_expect_success "git repo manifest: show manifest of Maint branch" '
 	test_cmp expect actual
 '
 
-test_expect_success "git repo manifest -o actual" '
+test_expect_success "git repo-go manifest -o actual" '
 	rm actual &&
 	(
 		cd work &&
-		git-repo manifest -o ../actual
+		git-repo-go manifest -o ../actual
 	) &&
 	cat >expect<<-EOF &&
 	<manifest>
@@ -73,15 +73,15 @@ test_expect_success "git repo manifest -o actual" '
 test_expect_success "switch manifest branch" '
 	(
 		cd work &&
-		git-repo init -b master &&
-		git-repo sync
+		git-repo-go init -b master &&
+		git-repo-go sync
 	)
 '
 	
-test_expect_success "git repo manifest: show manifest of master branch" '
+test_expect_success "git repo-go manifest: show manifest of master branch" '
 	(
 		cd work &&
-		git-repo manifest
+		git-repo-go manifest
 	) >actual 2>&1 &&
 	cat >expect<<-EOF &&
 	<manifest>
@@ -102,10 +102,10 @@ test_expect_success "git repo manifest: show manifest of master branch" '
 	test_cmp expect actual
 '
 
-test_expect_success "git repo manifest: freeze manifest" '
+test_expect_success "git repo-go manifest: freeze manifest" '
 	(
 		cd work &&
-		git-repo manifest -r
+		git-repo-go manifest -r
 	) >actual 2>&1 &&
 	cat >expect<<-EOF &&
 	<manifest>
@@ -126,10 +126,10 @@ test_expect_success "git repo manifest: freeze manifest" '
 	test_cmp expect actual
 '
 
-test_expect_success "git repo manifest: freeze manifest --suppress-upstream-revision" '
+test_expect_success "git repo-go manifest: freeze manifest --suppress-upstream-revision" '
 	(
 		cd work &&
-		git-repo manifest -r --suppress-upstream-revision
+		git-repo-go manifest -r --suppress-upstream-revision
 	) >actual 2>&1 &&
 	cat >expect<<-EOF &&
 	<manifest>

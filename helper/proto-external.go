@@ -53,7 +53,7 @@ func (v ExternalProtoHelper) GetSSHInfo() *SSHInfo {
 // Program is program name of remote helper.
 func (v *ExternalProtoHelper) Program() string {
 	if v.program == "" {
-		v.program = "git-repo-helper-proto-" + strings.ToLower(v.sshInfo.ProtoType)
+		v.program = "git-repo-go-helper-proto-" + strings.ToLower(v.sshInfo.ProtoType)
 	}
 	return v.program
 }

@@ -775,7 +775,7 @@ func (v uploadCommand) fmtUploadOptionsScript(optionsFile string, published bool
 			)
 		}
 
-		// fallback to ~/.git-repo/UPLOAD_OPTIONS
+		// fallback to ~/.git-repo-go/UPLOAD_OPTIONS
 		if !path.Exist(optionsFile) {
 			configDir, err := config.GetConfigDir()
 			if err != nil {

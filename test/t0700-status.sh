@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="test 'git-repo status'"
+test_description="test 'git-repo-go status'"
 
 . lib/test-lib.sh
 
@@ -13,8 +13,8 @@ test_expect_success "setup" '
 	mkdir work &&
 	(
 		cd work &&
-		git-repo init -g all -u $manifest_url &&
-		git-repo sync \
+		git-repo-go init -g all -u $manifest_url &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -24,7 +24,7 @@ test_expect_success "setup" '
 test_expect_success "project1 has untracked module1" '
 	(
 		cd work &&
-		git-repo status
+		git-repo-go status
 	) >actual &&
 	cat >expect<<-EOF &&
 	project projects/app1/                          (*** NO BRANCH ***)
@@ -37,8 +37,8 @@ test_expect_success "project1 has untracked module1" '
 test_expect_success "start new branch" '
 	(
 		cd work &&
-		git-repo start --all jx/topic &&
-		git-repo status
+		git-repo-go start --all jx/topic &&
+		git-repo-go status
 	) >actual &&
 	cat >expect<<-EOF &&
 	project projects/app1/                          branch jx/topic
@@ -53,7 +53,7 @@ test_expect_success "ignore module1" '
 		cd work/projects/app1 &&
 		echo "/module1/" >.gitignore &&
 		git add .gitignore &&
-		git-repo status
+		git-repo-go status
 	) >actual &&
 	cat >expect<<-EOF &&
 	project projects/app1/                          branch jx/topic
@@ -67,7 +67,7 @@ test_expect_success "update .gitignore" '
 	(
 		cd work/projects/app1 &&
 		echo "*.o" >>.gitignore &&
-		git-repo status
+		git-repo-go status
 	) >actual &&
 	cat >expect<<-EOF &&
 	project projects/app1/                          branch jx/topic
@@ -85,7 +85,7 @@ test_expect_success "working directory clean" '
 	) &&
 	(
 		cd work &&
-		git-repo status
+		git-repo-go status
 	) >actual 2>&1 &&
 	cat >expect<<-EOF &&
 	NOTE: nothing to commit (working directory clean)

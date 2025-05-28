@@ -48,26 +48,26 @@ REPO-VERSION-FILE: FORCE
 LDFLAGS := -ldflags "-X $(PKG)/version.Version=$(REPO_VERSION)"
 RELEASE_LDFLAGS := -ldflags "-X $(PKG)/version.Version=$(REPO_VERSION) -s -w"
 
-git-repo: $(shell find . -name '*.go') | REPO-VERSION-FILE
+git-repo-go: $(shell find . -name '*.go') | REPO-VERSION-FILE
 	$(call message,Building $@)
 	$(GOBUILD) $(LDFLAGS) -o $@
 
 golint:
-	$(call message,Testing git-repo using golint for coding style)
+	$(call message,Testing git-repo-go using golint for coding style)
 	@golint $(LOCAL_PACKAGES)
 
 test: ut it
 
 ut: $(TARGETS)
-	$(call message,Testing git-repo for unit tests)
+	$(call message,Testing git-repo-go for unit tests)
 	$(GOTEST) $(PKG)/...
 
 it: $(TARGETS)
-	$(call message,Testing git-repo for integration tests)
+	$(call message,Testing git-repo-go for integration tests)
 	@make -C test
 
 it-no-prove: $(TARGETS)
-	$(call message,Testing git-repo for integration tests (not using prove))
+	$(call message,Testing git-repo-go for integration tests (not using prove))
 	@make -C test test
 
 version-yml: REPO-VERSION-FILE
@@ -78,8 +78,8 @@ version-yml: REPO-VERSION-FILE
 release: macOS Linux Windows
 
 Linux: Linux-64 Linux-32
-Linux-64: _build/$(REPO_VERSION)/Linux-64/git-repo
-_build/$(REPO_VERSION)/Linux-64/git-repo: FORCE
+Linux-64: _build/$(REPO_VERSION)/Linux-64/git-repo-go
+_build/$(REPO_VERSION)/Linux-64/git-repo-go: FORCE
 	@$(call message,Building $@)
 	@mkdir -p $(shell dirname $@)
 	$(GOBUILD_LINUX_64) $(RELEASE_LDFLAGS) -o $@
@@ -87,10 +87,10 @@ _build/$(REPO_VERSION)/Linux-64/git-repo: FORCE
 	(cd $(shell dirname $@) && \
 		$(SHA256SUM) $(shell basename $@) >$(shell basename $@).sha256 && \
 		$(GPGSIGN) -o $(shell basename $@).sha256.gpg $(shell basename $@).sha256 && \
-		$(TAR) -zcvf ../git-repo-$(REPO_VERSION)-Linux-64.tar.gz --transform "s/^\./git-repo-$(REPO_VERSION)-Linux-64/" .)
+		$(TAR) -zcvf ../git-repo-go-$(REPO_VERSION)-Linux-64.tar.gz --transform "s/^\./git-repo-go-$(REPO_VERSION)-Linux-64/" .)
 
-Linux-32: _build/$(REPO_VERSION)/Linux-32/git-repo
-_build/$(REPO_VERSION)/Linux-32/git-repo: FORCE
+Linux-32: _build/$(REPO_VERSION)/Linux-32/git-repo-go
+_build/$(REPO_VERSION)/Linux-32/git-repo-go: FORCE
 	$(call message,Building $@)
 	@mkdir -p $(shell dirname $@)
 	$(GOBUILD_LINUX_32) $(RELEASE_LDFLAGS) -o $@
@@ -98,11 +98,11 @@ _build/$(REPO_VERSION)/Linux-32/git-repo: FORCE
 	(cd $(shell dirname $@) && \
 		$(SHA256SUM) $(shell basename $@) >$(shell basename $@).sha256 && \
 		$(GPGSIGN) -o $(shell basename $@).sha256.gpg $(shell basename $@).sha256 && \
-		$(TAR) -zcvf ../git-repo-$(REPO_VERSION)-Linux-32.tar.gz --transform "s/^\./git-repo-$(REPO_VERSION)-Linux-32/" .)
+		$(TAR) -zcvf ../git-repo-go-$(REPO_VERSION)-Linux-32.tar.gz --transform "s/^\./git-repo-go-$(REPO_VERSION)-Linux-32/" .)
 
 Windows: Windows-64 Windows-32
-Windows-64: _build/$(REPO_VERSION)/git-repo-$(REPO_VERSION)-Windows-64/git-repo.exe
-_build/$(REPO_VERSION)/git-repo-$(REPO_VERSION)-Windows-64/git-repo.exe: FORCE
+Windows-64: _build/$(REPO_VERSION)/git-repo-go-$(REPO_VERSION)-Windows-64/git-repo-go.exe
+_build/$(REPO_VERSION)/git-repo-go-$(REPO_VERSION)-Windows-64/git-repo-go.exe: FORCE
 	$(call message,Building $@)
 	@mkdir -p $(shell dirname $@)
 	$(GOBUILD_WINDOWS_64) $(RELEASE_LDFLAGS) -o $@
@@ -111,10 +111,10 @@ _build/$(REPO_VERSION)/git-repo-$(REPO_VERSION)-Windows-64/git-repo.exe: FORCE
 		$(SHA256SUM) $(shell basename $@) >$(shell basename $@).sha256 && \
 		$(GPGSIGN) -o $(shell basename $@).sha256.gpg $(shell basename $@).sha256 && \
 		cd .. && \
-		zip -r git-repo-$(REPO_VERSION)-Windows-64.zip git-repo-$(REPO_VERSION)-Windows-64/)
+		zip -r git-repo-go$(REPO_VERSION)-Windows-64.zip git-repo-go-$(REPO_VERSION)-Windows-64/)
 
-Windows-32: _build/$(REPO_VERSION)/git-repo-$(REPO_VERSION)-Windows-32/git-repo.exe
-_build/$(REPO_VERSION)/git-repo-$(REPO_VERSION)-Windows-32/git-repo.exe: FORCE
+Windows-32: _build/$(REPO_VERSION)/git-repo-go-$(REPO_VERSION)-Windows-32/git-repo-go.exe
+_build/$(REPO_VERSION)/git-repo-go-$(REPO_VERSION)-Windows-32/git-repo-go.exe: FORCE
 	$(call message,Building $@)
 	@mkdir -p $(shell dirname $@)
 	$(GOBUILD_WINDOWS_32) $(RELEASE_LDFLAGS) -o $@
@@ -123,11 +123,11 @@ _build/$(REPO_VERSION)/git-repo-$(REPO_VERSION)-Windows-32/git-repo.exe: FORCE
 		$(SHA256SUM) $(shell basename $@) >$(shell basename $@).sha256 && \
 		$(GPGSIGN) -o $(shell basename $@).sha256.gpg $(shell basename $@).sha256 && \
 		cd .. && \
-		zip -r git-repo-$(REPO_VERSION)-Windows-32.zip git-repo-$(REPO_VERSION)-Windows-32/)
+		zip -r git-repo-go-$(REPO_VERSION)-Windows-32.zip git-repo-go-$(REPO_VERSION)-Windows-32/)
 
 macOS: macOS-64 macOS-arm64
-macOS-64: _build/$(REPO_VERSION)/macOS-64/git-repo
-_build/$(REPO_VERSION)/macOS-64/git-repo: FORCE
+macOS-64: _build/$(REPO_VERSION)/macOS-64/git-repo-go
+_build/$(REPO_VERSION)/macOS-64/git-repo-go: FORCE
 	$(call message,Building $@)
 	@mkdir -p $(shell dirname $@)
 	$(GOBUILD_MAC_64) $(RELEASE_LDFLAGS) -o $@
@@ -135,11 +135,11 @@ _build/$(REPO_VERSION)/macOS-64/git-repo: FORCE
 	(cd $(shell dirname $@) && \
 		$(SHA256SUM) $(shell basename $@) >$(shell basename $@).sha256 && \
 		$(GPGSIGN) -o $(shell basename $@).sha256.gpg $(shell basename $@).sha256 && \
-		$(TAR) -zcvf ../git-repo-$(REPO_VERSION)-macOS-64.tar.gz --transform "s/^\./git-repo-$(REPO_VERSION)-macOS-64/" .)
+		$(TAR) -zcvf ../git-repo-go-$(REPO_VERSION)-macOS-64.tar.gz --transform "s/^\./git-repo-go-$(REPO_VERSION)-macOS-64/" .)
 
 # go 1.15 no longer support build of macOS-32
-macOS-32: _build/$(REPO_VERSION)/macOS-32/git-repo
-_build/$(REPO_VERSION)/macOS-32/git-repo: FORCE
+macOS-32: _build/$(REPO_VERSION)/macOS-32/git-repo-go
+_build/$(REPO_VERSION)/macOS-32/git-repo-go: FORCE
 	$(call message,Building $@)
 	@mkdir -p $(shell dirname $@)
 	$(GOBUILD_MAC_32) $(RELEASE_LDFLAGS) -o $@
@@ -147,10 +147,10 @@ _build/$(REPO_VERSION)/macOS-32/git-repo: FORCE
 	(cd $(shell dirname $@) && \
 		$(SHA256SUM) $(shell basename $@) >$(shell basename $@).sha256 && \
 		$(GPGSIGN) -o $(shell basename $@).sha256.gpg $(shell basename $@).sha256 && \
-		$(TAR) -zcvf ../git-repo-$(REPO_VERSION)-macOS-32.tar.gz --transform "s/^\./git-repo-$(REPO_VERSION)-macOS-32/" .)
+		$(TAR) -zcvf ../git-repo-go-$(REPO_VERSION)-macOS-32.tar.gz --transform "s/^\./git-repo-go-$(REPO_VERSION)-macOS-32/" .)
 
-macOS-arm64: _build/$(REPO_VERSION)/macOS-arm64/git-repo
-_build/$(REPO_VERSION)/macOS-arm64/git-repo: FORCE
+macOS-arm64: _build/$(REPO_VERSION)/macOS-arm64/git-repo-go
+_build/$(REPO_VERSION)/macOS-arm64/git-repo-go: FORCE
 	$(call message,Building $@)
 	@mkdir -p $(shell dirname $@)
 	$(GOBUILD_MAC_ARM64) $(RELEASE_LDFLAGS) -o $@
@@ -158,12 +158,12 @@ _build/$(REPO_VERSION)/macOS-arm64/git-repo: FORCE
 	(cd $(shell dirname $@) && \
 		$(SHA256SUM) $(shell basename $@) >$(shell basename $@).sha256 && \
 		$(GPGSIGN) -o $(shell basename $@).sha256.gpg $(shell basename $@).sha256 && \
-		$(TAR) -zcvf ../git-repo-$(REPO_VERSION)-macOS-arm64.tar.gz --transform "s/^\./git-repo-$(REPO_VERSION)-macOS-arm64/" .)
+		$(TAR) -zcvf ../git-repo-go-$(REPO_VERSION)-macOS-arm64.tar.gz --transform "s/^\./git-repo-go-$(REPO_VERSION)-macOS-arm64/" .)
 
 index:
 	$(call message,Building $@)
 	@mkdir -p _build/$(REPO_VERSION)/
-	pandoc -s -f markdown -t html --metadata title="CHANGELOG of git-repo" -o _build/$(REPO_VERSION)/index.html CHANGELOG.md
+	pandoc -s -f markdown -t html --metadata title="CHANGELOG of git-repo-go" -o _build/$(REPO_VERSION)/index.html CHANGELOG.md
 
 clean:
 	$(call message,Cleaning $(TARGETS))

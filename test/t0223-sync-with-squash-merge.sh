@@ -15,8 +15,8 @@ test_expect_success "setup" '
 test_expect_success "init from Maint branch and sync" '
 	(
 		cd work &&
-		git-repo init -u "$manifest_url" -b Maint &&
-		git-repo sync \
+		git-repo-go init -u "$manifest_url" -b Maint &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -26,7 +26,7 @@ test_expect_success "init from Maint branch and sync" '
 test_expect_success "create a squash commit in projects/app1" '
 	(
 		cd work &&
-		git repo start --all my/topic &&
+		git repo-go start --all my/topic &&
 		cd projects/app1 &&
 		echo topic1 >topic1.txt &&
 		echo topic2 >topic2.txt &&
@@ -54,7 +54,7 @@ test_expect_success "recreate local commits" '
 test_expect_success "sync network-only, and show commit log" '
 	(
 		cd work &&
-		git-repo sync -n \
+		git-repo-go sync -n \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -84,7 +84,7 @@ test_expect_success "rebased after sync" '
 	(
 		cd work &&
 		test_tick &&
-		git-repo sync \
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"

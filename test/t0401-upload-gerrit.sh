@@ -13,15 +13,15 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo init & sync" '
+test_expect_success "git-repo-go init & sync" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -g all -b Maint &&
-		git-repo sync  \
+		git-repo-go init -u $manifest_url -g all -b Maint &&
+		git-repo-go sync  \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"gerrit\"}" &&
-		git repo start --all my/topic1
+		git repo-go start --all my/topic1
 	)
 '
 
@@ -72,7 +72,7 @@ test_expect_success "new commit: ready for upload" '
 		ERROR: upload aborted by user
 		Error: nothing confirmed for upload
 		EOF
-		test_must_fail git-repo upload \
+		test_must_fail git-repo-go upload \
 			--assume-no \
 			--no-edit \
 			>out 2>&1 &&
@@ -84,7 +84,7 @@ test_expect_success "new commit: ready for upload" '
 test_expect_success "upload --dryrun --drafts (with cache)" '
 	(
 		cd work &&
-		git repo start --all my/topic2 &&
+		git repo-go start --all my/topic2 &&
 		cat >expect<<-EOF &&
 		Upload project main/ to remote branch Maint (draft):
 		  branch my/topic1 ( 1 commit(s)):
@@ -95,7 +95,7 @@ test_expect_success "upload --dryrun --drafts (with cache)" '
 		
 		----------------------------------------------------------------------
 		EOF
-		git-repo upload \
+		git-repo-go upload \
 			--assume-yes \
 			--no-edit \
 			--draft \
@@ -110,7 +110,7 @@ test_expect_success "upload --dryrun --drafts (with cache)" '
 test_expect_success "upload --dryrun --drafts (no cache)" '
 	(
 		cd work &&
-		git repo start --all my/topic2 &&
+		git repo-go start --all my/topic2 &&
 		cat >expect<<-EOF &&
 		Upload project main/ to remote branch Maint (draft):
 		  branch my/topic1 ( 1 commit(s)):
@@ -121,7 +121,7 @@ test_expect_success "upload --dryrun --drafts (no cache)" '
 		
 		----------------------------------------------------------------------
 		EOF
-		git-repo upload \
+		git-repo-go upload \
 			--assume-yes \
 			--no-edit \
 			--draft \
@@ -139,7 +139,7 @@ test_expect_success "upload --dryrun --drafts (no cache)" '
 test_expect_success "upload --dryrun with reviewers" '
 	(
 		cd work &&
-		git repo start --all my/topic2 &&
+		git repo-go start --all my/topic2 &&
 		cat >expect<<-EOF &&
 		Upload project main/ to remote branch Maint:
 		  branch my/topic1 ( 1 commit(s)):
@@ -150,7 +150,7 @@ test_expect_success "upload --dryrun with reviewers" '
 		
 		----------------------------------------------------------------------
 		EOF
-		git-repo upload \
+		git-repo-go upload \
 			--assume-yes \
 			--no-edit \
 			--dryrun \

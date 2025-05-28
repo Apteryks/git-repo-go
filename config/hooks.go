@@ -117,7 +117,7 @@ func isHooksUptodate() bool {
 	return true
 }
 
-// InstallRepoHooks installs hooks into ~/.git-repo/hooks.
+// InstallRepoHooks installs hooks into ~/.git-repo-go/hooks.
 func InstallRepoHooks() error {
 	if isHooksUptodate() {
 		return nil

@@ -74,7 +74,7 @@ func (v *rootCommand) Command() *cobra.Command {
 	}
 
 	v.cmd = &cobra.Command{
-		Use:   "git-repo",
+		Use:   "git-repo-go",
 		Short: "A command line tool for centralized git workflow",
 		Long: `A command line tool for centralized git workflow.
 
@@ -103,7 +103,7 @@ this command with special options.`,
 	v.cmd.PersistentFlags().StringVar(&cfgFile,
 		"config",
 		"",
-		"config file (default is $HOME/.git-repo.yaml)")
+		"config file (default is $HOME/.git-repo-go.yaml)")
 	v.cmd.PersistentFlags().Bool("assume-no",
 		false,
 		"Automatic no to prompts")
@@ -182,7 +182,7 @@ func (v rootCommand) Execute(args []string) error {
 	if v.O.Version {
 		showVersion()
 	} else {
-		return newUserError("run 'git repo -h' for help")
+		return newUserError("run 'git repo-go -h' for help")
 	}
 	return nil
 }
@@ -221,7 +221,8 @@ func (v rootCommand) initConfig() {
 		}
 		filename := filepath.Join(configDir, config.DefaultGitRepoConfigFile)
 
-		// Search config in home directory with name ".git-repo" (without extension).
+		// Search config in home directory with name
+		// ".git-repo-go" (without extension).
 		viper.AddConfigPath(filepath.Dir(filename))
 		viper.SetConfigName(filepath.Base(filename))
 	}

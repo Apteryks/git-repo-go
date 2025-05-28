@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="test 'git-repo forall' on mirrors"
+test_description="test 'git-repo-go forall' on mirrors"
 
 . lib/test-lib.sh
 
@@ -13,8 +13,8 @@ test_expect_success "setup" '
 	mkdir work &&
 	(
 		cd work &&
-		git-repo init --mirror -g all -u $manifest_url &&
-		git-repo sync \
+		git-repo-go init --mirror -g all -u $manifest_url &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -24,7 +24,7 @@ test_expect_success "setup" '
 test_expect_success "check project mirrors' cwd" '
 	(
 		cd work &&
-		git-repo forall -p -j 1 -g all -c pwd
+		git-repo-go forall -p -j 1 -g all -c pwd
 	) >out &&
 	sed -e "s#$HOME#...#g" <out >actual &&
 	cat >expect<<-EOF &&

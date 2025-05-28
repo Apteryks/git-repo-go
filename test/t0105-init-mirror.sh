@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="git-repo init"
+test_description="git-repo-go init"
 
 . lib/test-lib.sh
 
@@ -13,10 +13,10 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo init --mirror -u" '
+test_expect_success "git-repo-go init --mirror -u" '
 	(
 		cd work &&
-		git-repo init --mirror -u $manifest_url
+		git-repo-go init --mirror -u $manifest_url
 	)
 '
 

@@ -13,11 +13,11 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo sync using remote-ro.xml" '
+test_expect_success "git-repo-go sync using remote-ro.xml" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -g all -m remote-ro.xml &&
-		git-repo sync --no-cache \
+		git-repo-go init -u $manifest_url -g all -m remote-ro.xml &&
+		git-repo-go sync --no-cache \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"

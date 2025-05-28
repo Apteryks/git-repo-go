@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="test 'git-repo abandon --single'"
+test_description="test 'git-repo-go abandon --single'"
 
 . lib/test-lib.sh
 
@@ -34,11 +34,11 @@ test_expect_success "create branches" '
 	)
 '
 
-test_expect_success "git-repo abandon --single -b <branch>" '
+test_expect_success "git-repo-go abandon --single -b <branch>" '
 	(
 		cd work/main &&
 		test -d .git &&
-		git-repo abandon --single -b jx/topic2
+		git-repo-go abandon --single -b jx/topic2
 	) >actual 2>&1 &&
 	cat >expect<<-EOF &&
 	Pending branches (which have unmerged commits, leave it as is)
@@ -49,11 +49,11 @@ test_expect_success "git-repo abandon --single -b <branch>" '
 	test_cmp expect actual
 '
 
-test_expect_success "git-repo abandon --single -b <branch>, by force" '
+test_expect_success "git-repo-go abandon --single -b <branch>, by force" '
 	(
 		cd work/main &&
 		test -d .git &&
-		git-repo abandon --single -b jx/topic2 --force
+		git-repo-go abandon --single -b jx/topic2 --force
 	) >actual 2>&1 &&
 	cat >expect<<-EOF &&
 	Abandoned branches
@@ -64,11 +64,11 @@ test_expect_success "git-repo abandon --single -b <branch>, by force" '
 	test_cmp expect actual
 '
 
-test_expect_success "git-repo abandon --single --all" '
+test_expect_success "git-repo-go abandon --single --all" '
 	(
 		cd work/main &&
 		test -d .git &&
-		git-repo abandon --single --all
+		git-repo-go abandon --single --all
 	) >actual 2>&1 &&
 	cat >expect<<-EOF &&
 	Pruned branches (already merged)
@@ -88,11 +88,11 @@ test_expect_success "git-repo abandon --single --all" '
 	test_cmp expect actual
 '
 
-test_expect_success "git-repo abandon --single --all, by force" '
+test_expect_success "git-repo-go abandon --single --all, by force" '
 	(
 		cd work/main &&
 		test -d .git &&
-		git-repo abandon --single --all --force
+		git-repo-go abandon --single --all --force
 	) >actual 2>&1 &&
 	cat >expect<<-EOF &&
 	Abandoned branches

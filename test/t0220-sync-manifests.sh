@@ -73,10 +73,10 @@ test_expect_success "setup repositories: app2" '
 	)
 '
 
-test_expect_success "git repo init" '
+test_expect_success "git repo-go init" '
 	(
 		cd work &&
-		git repo init -u "$manifest_url" &&
+		git repo-go init -u "$manifest_url" &&
 		(
 			cd .repo/manifests &&
 			git symbolic-ref HEAD &&
@@ -92,10 +92,10 @@ test_expect_success "git repo init" '
 	)
 '
 
-test_expect_success "git repo sync -d, manifests not detached" '
+test_expect_success "git repo-go sync -d, manifests not detached" '
 	(
 		cd work &&
-		git repo sync --detach \
+		git repo-go sync --detach \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}" &&
@@ -138,11 +138,11 @@ test_expect_success "new commit in local manifests" '
 	)
 '
 
-test_expect_success "git repo sync -d, manifests not detached" '
+test_expect_success "git repo-go sync -d, manifests not detached" '
 	(
 		cd work &&
 		test_tick &&
-		git repo sync --detach \
+		git repo-go sync --detach \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}" &&

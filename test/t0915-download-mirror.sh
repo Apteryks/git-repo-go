@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="git-repo download --mirror test"
+test_description="git-repo-go download --mirror test"
 
 . lib/test-lib.sh
 
@@ -13,11 +13,11 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo sync" '
+test_expect_success "git-repo-go sync" '
 	(
 		cd work &&
-		git-repo init --mirror -u $manifest_url -g all -b Maint &&
-		git-repo sync \
+		git-repo-go init --mirror -u $manifest_url -g all -b Maint &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}" \
@@ -28,7 +28,7 @@ test_expect_success "git-repo sync" '
 test_expect_success "fail: cannot run download in mirrored repo" '
 	(
 		cd work/main.git &&
-		test_must_fail git-repo download \
+		test_must_fail git-repo-go download \
 			--no-cache \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \

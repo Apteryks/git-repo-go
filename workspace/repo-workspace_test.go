@@ -90,7 +90,7 @@ func TestNewLoadEmptyRepoWorkSpace(t *testing.T) {
 		assert = assert.New(t)
 	)
 
-	tmpdir, err = os.MkdirTemp("", "git-repo-")
+	tmpdir, err = os.MkdirTemp("", "git-repo-go-")
 	if err != nil {
 		panic(err)
 	}
@@ -114,7 +114,7 @@ func TestNewLoadEmptyRepoWorkSpaceInit(t *testing.T) {
 		assert = assert.New(t)
 	)
 
-	tmpdir, err = os.MkdirTemp("", "git-repo-")
+	tmpdir, err = os.MkdirTemp("", "git-repo-go-")
 	if err != nil {
 		panic(err)
 	}
@@ -141,7 +141,7 @@ func TestLoadRepoWorkSpace(t *testing.T) {
 		assert = assert.New(t)
 	)
 
-	tmpdir, err = os.MkdirTemp("", "git-repo-")
+	tmpdir, err = os.MkdirTemp("", "git-repo-go-")
 	if err != nil {
 		panic(err)
 	}

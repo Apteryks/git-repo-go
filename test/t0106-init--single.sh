@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="git-repo init --single test"
+test_description="git-repo-go init --single test"
 
 . lib/test-lib.sh
 
@@ -16,7 +16,7 @@ test_expect_success "setup" '
 test_expect_success "cannot run init --single" '
 	(
 		cd work &&
-		test_must_fail git-repo init --single -u $manifest_url
+		test_must_fail git-repo-go init --single -u $manifest_url
 	) >actual 2>&1 &&
 	cat >expect <<-EOF &&
 	FATAL: cannot run in single mode

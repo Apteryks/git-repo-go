@@ -19,7 +19,7 @@ func TestRepositoryInit(t *testing.T) {
 
 	assert := assert.New(t)
 
-	tmpdir, err := os.MkdirTemp("", "git-repo-")
+	tmpdir, err := os.MkdirTemp("", "git-repo-go-")
 	if err != nil {
 		panic(err)
 	}
@@ -83,7 +83,7 @@ func TestRepositoryIsUnborn(t *testing.T) {
 
 	assert := assert.New(t)
 
-	tmpdir, err := os.MkdirTemp("", "git-repo-")
+	tmpdir, err := os.MkdirTemp("", "git-repo-go-")
 	if err != nil {
 		panic(err)
 	}
@@ -112,7 +112,7 @@ func TestRepositoryFetch(t *testing.T) {
 
 	assert := assert.New(t)
 
-	tmpdir, err := os.MkdirTemp("", "git-repo-")
+	tmpdir, err := os.MkdirTemp("", "git-repo-go-")
 	if err != nil {
 		panic(err)
 	}

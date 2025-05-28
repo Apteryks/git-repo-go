@@ -1,6 +1,6 @@
 # Command line framework
 
-As a command line tool, `git-repo` uses [cobra](https://github.com/spf13/cobra)
+As a command line tool, `git-repo-go` uses [cobra](https://github.com/spf13/cobra)
 as its command line framework and use [viper](https://github.com/spf13/viper)
 for config file and environment variables parsing.
 
@@ -13,7 +13,7 @@ are defined in root command and are available for all sub commands:
 * --config <config-file> : location of config file, which defines default settings.
 * --verbose, -v : verbose mode, and multple `-v` can be used to output more.
 * --quiet, -q : be quiet, not show notice messages.
-* --single : run `git-repo` in single repository mode. Only a few commands support it.
+* --single : run `git-repo-go` in single repository mode. Only a few commands support it.
 
 
 # Default settings
@@ -22,7 +22,7 @@ Default settings are defined in `config/config.go`, such as DefaultLogLevel
 ("warn" as default log level), DefailtLogRotate (20MB as the default rotate size).
 
     const (
-    	DefaultConfigPath = ".git-repo"
+    	DefaultConfigPath = ".git-repo-go"
     	DefaultLogRotate  = 20 * 1024 * 1024
     	DefaultLogLevel   = "warn"
     	...
@@ -30,23 +30,23 @@ Default settings are defined in `config/config.go`, such as DefaultLogLevel
 
 # Config file
 
-Default config file is `git-repo.yml` in HOME directory.  Settings in config
+Default config file is `git-repo-go.yml` in HOME directory.  Settings in config
 file can be used as default if not command line argument is provided.
 
-Example of `git-repo.yml`:
+Example of `git-repo-go.yml`:
 
-    logfile: /var/log/git-repo.log
+    logfile: /var/log/git-repo-go.log
     loglevel: warn
     logrotate: 10240000
 
 
 # Environment
 
-Environment variables with prefix `GIT_REPO` can be used to provide default
-value for git-repo settings, such as:
+Environment variables with prefix `GIT_REPO_GO` can be used to provide default
+value for git-repo-go settings, such as:
 
-    GIT_REPO_VERBOSE=2
-    GIT_REPO_LOGLEVEL=info
+    GIT_REPO_GO_VERBOSE=2
+    GIT_REPO_GO_LOGLEVEL=info
 
 
 # Adding a sub command

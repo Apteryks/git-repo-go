@@ -13,11 +13,11 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo sync -b <tag-0.1>" '
+test_expect_success "git-repo-go sync -b <tag-0.1>" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b refs/tags/v0.1 &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url -b refs/tags/v0.1 &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -75,11 +75,11 @@ test_expect_success "verify checkout commits of v0.1" '
 	)
 '
 
-test_expect_success "git-repo sync -d -b <tag-0.2>" '
+test_expect_success "git-repo-go sync -d -b <tag-0.2>" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url --detach -b refs/tags/v0.2 &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url --detach -b refs/tags/v0.2 &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -129,11 +129,11 @@ test_expect_success "verify checkout commits of v0.2" '
 	)
 '
 
-test_expect_success "git-repo switched back to <tag-0.1>" '
+test_expect_success "git-repo-go switched back to <tag-0.1>" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url --detach -b refs/tags/v0.1 &&
-		test_must_fail git-repo sync \
+		git-repo-go init -u $manifest_url --detach -b refs/tags/v0.1 &&
+		test_must_fail git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -154,11 +154,11 @@ test_expect_failure "obsolete projects and empty parents are deleted" '
 	)
 '
 
-test_expect_success "git-repo sync -b master -g all" '
+test_expect_success "git-repo-go sync -b master -g all" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b master -g all &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url -b master -g all &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -214,11 +214,11 @@ test_expect_success "verify checkout commits of master" '
 	)
 '
 
-test_expect_success "git-repo init -g default" '
+test_expect_success "git-repo-go init -g default" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -g default &&
-		test_must_fail git-repo sync \
+		git-repo-go init -u $manifest_url -g default &&
+		test_must_fail git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"

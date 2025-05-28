@@ -13,11 +13,11 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo sync to Maint branch" '
+test_expect_success "git-repo-go sync to Maint branch" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b Maint &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url -b Maint &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -52,11 +52,11 @@ test_expect_success "edit files in workdir, all projects are in detached HEAD" '
 	)
 '
 
-test_expect_success "git-repo sync to master branch, do not overwrite edit files" '
+test_expect_success "git-repo-go sync to master branch, do not overwrite edit files" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -b master &&
-		test_must_fail git-repo sync \
+		git-repo-go init -u $manifest_url -b master &&
+		test_must_fail git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}" &&
@@ -94,8 +94,8 @@ test_expect_success "clean workspace" '
 			cd ../../projects/app1/module1 &&
 			git checkout -- .
 		) &&
-		git-repo init -u $manifest_url -b master &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url -b master &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"

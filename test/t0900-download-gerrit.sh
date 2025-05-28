@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="test 'git-repo download' for agit"
+test_description="test 'git-repo-go download' for agit"
 
 . lib/test-lib.sh
 
@@ -13,19 +13,19 @@ test_expect_success "setup" '
 	mkdir work &&
 	(
 		cd work &&
-		git-repo init -u $manifest_url &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url &&
+		git-repo-go sync \
 			--no-cache \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response "ssh.example.com 29418" &&
-		git-repo start --all jx/topic
+		git-repo-go start --all jx/topic
 	)
 '
 
 test_expect_success "download and checkout" '
 	(
 		cd work &&
-		git-repo download \
+		git-repo-go download \
 			--no-cache \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response "ssh.example.com 29418" \
@@ -50,7 +50,7 @@ test_expect_success "download and checkout" '
 test_expect_success "download again with already merged notice" '
 	(
 		cd work &&
-		git-repo download \
+		git-repo-go download \
 			--no-cache \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response "ssh.example.com 29418" \
@@ -79,18 +79,18 @@ test_expect_success "download again with already merged notice" '
 test_expect_success "restore using sync and start again" '
 	(
 		cd work &&
-		git-repo sync --detach \
+		git-repo-go sync --detach \
 			--no-cache \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response "ssh.example.com 29418" &&
-		git-repo start --all jx/topic
+		git-repo-go start --all jx/topic
 	)
 '
 
 test_expect_success "download using cherry-pick" '
 	(
 		cd work &&
-		git-repo download \
+		git-repo-go download \
 			--no-cache \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response "ssh.example.com 29418" \
@@ -115,18 +115,18 @@ test_expect_success "download using cherry-pick" '
 test_expect_success "restore using sync and start again" '
 	(
 		cd work &&
-		git-repo sync --detach \
+		git-repo-go sync --detach \
 			--no-cache \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response "ssh.example.com 29418" &&
-		git-repo start --all jx/topic
+		git-repo-go start --all jx/topic
 	)
 '
 
 test_expect_success "download failed using ff-only" '
 	(
 		cd work &&
-		test_must_fail git-repo download \
+		test_must_fail git-repo-go download \
 			--no-cache \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response "ssh.example.com 29418" \

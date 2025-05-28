@@ -13,11 +13,11 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo init & sync" '
+test_expect_success "git-repo-go init & sync" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -g all -b Maint &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url -g all -b Maint &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -27,7 +27,7 @@ test_expect_success "git-repo init & sync" '
 test_expect_success "--remote only work with --single" '
 	(
 		cd work &&
-		test_must_fail git-repo upload --remote origin \
+		test_must_fail git-repo-go upload --remote origin \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}" \
@@ -45,7 +45,7 @@ test_expect_success "detached: no branch ready for upload" '
 		cat >expect<<-EOF &&
 		NOTE: no branches ready for upload
 		EOF
-		git-repo upload --mock-ssh-info-status 200 \
+		git-repo-go upload --mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}" \
 			>actual 2>&1 &&
@@ -56,11 +56,11 @@ test_expect_success "detached: no branch ready for upload" '
 test_expect_success "new branch: no branch ready for upload" '
 	(
 		cd work &&
-		git repo start --all my/topic1 &&
+		git repo-go start --all my/topic1 &&
 		cat >expect<<-EOF &&
 		NOTE: no branches ready for upload
 		EOF
-		git-repo upload --mock-ssh-info-status 200 \
+		git-repo-go upload --mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}" \
 			>actual 2>&1 &&
@@ -89,7 +89,7 @@ test_expect_success "with new commit, ready for upload (--no-edit)" '
 		ERROR: upload aborted by user
 		Error: nothing confirmed for upload
 		EOF
-		test_must_fail git-repo upload \
+		test_must_fail git-repo-go upload \
 			--assume-no \
 			--no-edit \
 			--mock-ssh-info-status 200 \
@@ -143,7 +143,7 @@ test_expect_success "with new commit, ready for upload (edit push options)" '
 		
 		----------------------------------------------------------------------
 		EOF
-		git-repo upload \
+		git-repo-go upload \
 			--dryrun \
 			--no-cache \
 			--mock-ssh-info-status 200 \
@@ -164,13 +164,13 @@ test_expect_success "agit-flow proto v2: no agit-receive-pack, and push with env
 		         <hash>
 		to https://example.com (y/N)? Yes
 		NOTE: main> will execute command: git push ssh://git@ssh.example.com/main.git refs/heads/my/topic1:refs/for/Maint/my/topic1
-		NOTE: main> with extra environment: AGIT_FLOW=git-repo/n.n.n.n
+		NOTE: main> with extra environment: AGIT_FLOW=git-repo-go/n.n.n.n
 		NOTE: main> with extra environment: GIT_SSH_COMMAND=ssh -o SendEnv=AGIT_FLOW
 		NOTE: main> will update-ref refs/published/my/topic1 on refs/heads/my/topic1, reason: review from my/topic1 to Maint on https://example.com
 		
 		----------------------------------------------------------------------
 		EOF
-		git-repo upload \
+		git-repo-go upload \
 			--dryrun \
 			--no-cache \
 			--no-edit \
@@ -179,7 +179,7 @@ test_expect_success "agit-flow proto v2: no agit-receive-pack, and push with env
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\", \"version\":2}" \
 			>out 2>&1 &&
-		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" <out >actual &&
+		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" <out >actual &&
 		test_cmp expect actual
 	)
 '
@@ -187,11 +187,11 @@ test_expect_success "agit-flow proto v2: no agit-receive-pack, and push with env
 test_expect_success "new branch, and do nothing for for upload --cbr" '
 	(
 		cd work &&
-		git repo start --all my/topic2 &&
+		git repo-go start --all my/topic2 &&
 		cat >expect<<-EOF &&
 		NOTE: no branches ready for upload
 		EOF
-		git-repo upload --cbr \
+		git-repo-go upload --cbr \
 			--assume-no \
 			--no-cache \
 			--mock-ssh-info-status 200 \
@@ -206,8 +206,8 @@ test_expect_success "new branch, and do nothing for for upload --cbr" '
 test_expect_success "upload branch without --cbr" '
 	(
 		cd work &&
-		git repo start --all my/topic2 &&
-		test_must_fail git-repo upload \
+		git repo-go start --all my/topic2 &&
+		test_must_fail git-repo-go upload \
 			--assume-no \
 			--no-edit \
 			--mock-ssh-info-status 200 \
@@ -230,20 +230,20 @@ test_expect_success "upload branch without --cbr" '
 test_expect_success "upload --dryrun --drafts" '
 	(
 		cd work &&
-		git repo start --all my/topic2 &&
+		git repo-go start --all my/topic2 &&
 		cat >expect<<-EOF &&
 		Upload project main/ to remote branch Maint (draft):
 		  branch my/topic1 ( 1 commit(s)):
 		         <hash>
 		to https://example.com (y/N)? Yes
 		NOTE: main> will execute command: git push ssh://git@ssh.example.com/main.git refs/heads/my/topic1:refs/drafts/Maint/my/topic1
-		NOTE: main> with extra environment: AGIT_FLOW=git-repo/n.n.n.n
+		NOTE: main> with extra environment: AGIT_FLOW=git-repo-go/n.n.n.n
 		NOTE: main> with extra environment: GIT_SSH_COMMAND=ssh -o SendEnv=AGIT_FLOW
 		NOTE: main> will update-ref refs/published/my/topic1 on refs/heads/my/topic1, reason: review from my/topic1 to Maint on https://example.com
 		
 		----------------------------------------------------------------------
 		EOF
-		git-repo upload \
+		git-repo-go upload \
 			--assume-yes \
 			--no-edit \
 			--draft \
@@ -253,7 +253,7 @@ test_expect_success "upload --dryrun --drafts" '
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\", \"version\":2}" \
 			>out 2>&1 &&
-		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" <out >actual &&
+		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" <out >actual &&
 		test_cmp expect actual
 	)
 '
@@ -261,14 +261,14 @@ test_expect_success "upload --dryrun --drafts" '
 test_expect_success "upload --dryrun" '
 	(
 		cd work &&
-		git repo start --all my/topic2 &&
+		git repo-go start --all my/topic2 &&
 		cat >expect<<-EOF &&
 		Upload project main/ to remote branch Maint:
 		  branch my/topic1 ( 1 commit(s)):
 		         <hash>
 		to https://example.com (y/N)? Yes
 		EOF
-		if git-repo test version --git lt 2.10.0; then
+		if git-repo-go test version --git lt 2.10.0; then
 			cat >>expect<<-EOF
 			NOTE: main> will execute command: git push ssh://git@ssh.example.com/main.git refs/heads/my/topic1:refs/for/Maint/my/topic1%r=user1,r=user2,r=user3,r=user4,cc=user5,cc=user6,cc=user7,notify=NONE,private,wip
 			EOF
@@ -278,13 +278,13 @@ test_expect_success "upload --dryrun" '
 			EOF
 		fi &&
 		cat >>expect<<-EOF &&
-		NOTE: main> with extra environment: AGIT_FLOW=git-repo/n.n.n.n
+		NOTE: main> with extra environment: AGIT_FLOW=git-repo-go/n.n.n.n
 		NOTE: main> with extra environment: GIT_SSH_COMMAND=ssh -o SendEnv=AGIT_FLOW
 		NOTE: main> will update-ref refs/published/my/topic1 on refs/heads/my/topic1, reason: review from my/topic1 to Maint on https://example.com
 		
 		----------------------------------------------------------------------
 		EOF
-		git-repo upload \
+		git-repo-go upload \
 			--assume-yes \
 			--no-edit \
 			--dryrun \
@@ -302,7 +302,7 @@ test_expect_success "upload --dryrun" '
 			--wip \
 			--no-emails \
 			>out 2>&1 &&
-		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" <out >actual &&
+		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" <out >actual &&
 		test_cmp expect actual
 	)
 '
@@ -310,19 +310,19 @@ test_expect_success "upload --dryrun" '
 test_expect_success "mock-git-push, but do update-ref for upload" '
 	(
 		cd work &&
-		git repo start --all my/topic2 &&
+		git repo-go start --all my/topic2 &&
 		cat >expect<<-EOF &&
 		Upload project main/ to remote branch Maint:
 		  branch my/topic1 ( 1 commit(s)):
 		         <hash>
 		to https://example.com (y/N)? Yes
 		NOTE: main> will execute command: git push ssh://git@ssh.example.com/main.git refs/heads/my/topic1:refs/for/Maint/my/topic1
-		NOTE: main> with extra environment: AGIT_FLOW=git-repo/n.n.n.n
+		NOTE: main> with extra environment: AGIT_FLOW=git-repo-go/n.n.n.n
 		NOTE: main> with extra environment: GIT_SSH_COMMAND=ssh -o SendEnv=AGIT_FLOW
 		
 		----------------------------------------------------------------------
 		EOF
-		git-repo upload \
+		git-repo-go upload \
 			--assume-yes \
 			--no-edit \
 			--mock-git-push \
@@ -330,7 +330,7 @@ test_expect_success "mock-git-push, but do update-ref for upload" '
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\", \"version\":2}" \
 			>out 2>&1 &&
-		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" <out >actual &&
+		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" <out >actual &&
 		test_cmp expect actual
 	)
 '
@@ -352,7 +352,7 @@ test_expect_success "upload again, no branch ready for upload" '
 		NOTE: add option "--re-run" to bypass this check if you still want to upload.
 		NOTE: no branches ready for upload
 		EOF
-		git-repo upload \
+		git-repo-go upload \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}" \
@@ -370,13 +370,13 @@ test_expect_success "upload again with --re-run option" '
 		         <hash>
 		to https://example.com (y/N)? Yes
 		NOTE: main> will execute command: git push -o old-oid=<hash> ssh://git@ssh.example.com/main.git refs/heads/my/topic1:refs/for/Maint/my/topic1
-		NOTE: main> with extra environment: AGIT_FLOW=git-repo/n.n.n.n
+		NOTE: main> with extra environment: AGIT_FLOW=git-repo-go/n.n.n.n
 		NOTE: main> with extra environment: GIT_SSH_COMMAND=ssh -o SendEnv=AGIT_FLOW
 		NOTE: main> will update-ref refs/published/my/topic1 on refs/heads/my/topic1, reason: review from my/topic1 to Maint on https://example.com
 
 		----------------------------------------------------------------------
 		EOF
-		git-repo upload \
+		git-repo-go upload \
 			--dryrun \
 			--re-run \
 			--no-edit \
@@ -385,7 +385,7 @@ test_expect_success "upload again with --re-run option" '
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}" \
 			>out 2>&1 &&
-		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" <out >actual &&
+		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" <out >actual &&
 		test_cmp expect actual
 	)
 '

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="if manifests project changed, when running 'git-repo sync', manifests project should sync successful"
+test_description="if manifests project changed, when running 'git-repo-go sync', manifests project should sync successful"
 
 . lib/test-lib.sh
 
@@ -15,8 +15,8 @@ test_expect_success "setup" '
 test_expect_success "init from default branch (master branch), and sync" '
 	(
 		cd work &&
-		git-repo init -u "$manifest_url" &&
-		git-repo sync \
+		git-repo-go init -u "$manifest_url" &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -40,7 +40,7 @@ test_expect_success "create new commit in manifest default branch" '
 test_expect_success "sync again" '
 	(
 		cd work &&
-		git-repo sync \
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -64,8 +64,8 @@ test_expect_success "manifests updated successful" '
 test_expect_success "init -d and init -b Maint branch" '
 	(
 		cd work &&
-		git-repo init -d &&
-		git-repo init -b Maint
+		git-repo-go init -d &&
+		git-repo-go init -b Maint
 	) &&
 	(
 		cd work/.repo/manifests &&
@@ -94,7 +94,7 @@ test_expect_success "create new commit in manifest Maint branch" '
 test_expect_success "sync again" '
 	(
 		cd work &&
-		git-repo sync \
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="test 'git-repo forall'"
+test_description="test 'git-repo-go forall'"
 
 . lib/test-lib.sh
 
@@ -13,8 +13,8 @@ test_expect_success "setup" '
 	mkdir work &&
 	(
 		cd work &&
-		git-repo init -g all -u $manifest_url &&
-		git-repo sync \
+		git-repo-go init -g all -u $manifest_url &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -24,7 +24,7 @@ test_expect_success "setup" '
 test_expect_success "execute shell (-g all)" '
 	(
 		cd work &&
-		git-repo forall -g all -c '"'"'echo $REPO_PATH'"'"'
+		git-repo-go forall -g all -c '"'"'echo $REPO_PATH'"'"'
 	) >actual &&
 	cat >expect<<-EOF &&
 	main
@@ -40,7 +40,7 @@ test_expect_success "execute shell (-g all)" '
 test_expect_success "execute shell (-g app)" '
 	(
 		cd work &&
-		git-repo forall -g app -p -j 1 -c '"'"'echo $REPO_PROJECT'"'"'
+		git-repo-go forall -g app -p -j 1 -c '"'"'echo $REPO_PROJECT'"'"'
 	) >actual &&
 	cat >expect<<-EOF &&
 	project main/
@@ -61,7 +61,7 @@ test_expect_success "execute shell (-g app)" '
 test_expect_success "execute cmd (-r module1)" '
 	(
 		cd work &&
-		git-repo forall -r module1 -r driver-1 -p -j 1 -c echo ...
+		git-repo-go forall -r module1 -r driver-1 -p -j 1 -c echo ...
 	) >actual &&
 	cat >expect<<-EOF &&
 	project projects/app1/module1/
@@ -76,7 +76,7 @@ test_expect_success "execute cmd (-r module1)" '
 test_expect_success "execute cmd (-i module1)" '
 	(
 		cd work &&
-		git-repo forall -i module1 -i driver-2 -p -j 1 -c pwd
+		git-repo-go forall -i module1 -i driver-2 -p -j 1 -c pwd
 	) >out &&
 	sed -e "s#$HOME#...#g" <out >actual &&
 	cat >expect<<-EOF &&

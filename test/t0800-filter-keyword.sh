@@ -7,7 +7,7 @@ test_description="upload test"
 main_repo_url="file://${REPO_TEST_REPOSITORIES}/hello/main.git"
 
 test_expect_success "setup" '
-	git repo version &&
+	git repo-go version &&
 	mkdir work &&
 	(
 		cd work &&

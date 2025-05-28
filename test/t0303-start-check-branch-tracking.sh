@@ -13,11 +13,11 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo init" '
+test_expect_success "git-repo-go init" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -g all -b Maint &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url -g all -b Maint &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -27,7 +27,7 @@ test_expect_success "git-repo init" '
 test_expect_success "app1/module1 also has tracking branch" '
 	(
 		cd work &&
-		git-repo start --all jx/test1 &&
+		git-repo-go start --all jx/test1 &&
 		show_all_repo_branch_tracking >actual &&
 		cat >expect <<-EOF &&
 		## main
@@ -74,7 +74,7 @@ test_expect_success "manifests: point to fixed revisions" '
 test_expect_success "all projects have tracking branch" '
 	(
 		cd work &&
-		git-repo start --all jx/test2 &&
+		git-repo-go start --all jx/test2 &&
 		show_all_repo_branch_tracking >actual &&
 		cat >expect <<-EOF &&
 		## main

@@ -13,11 +13,11 @@ test_expect_success "setup" '
 	mkdir work
 '
 
-test_expect_success "git-repo init & sync" '
+test_expect_success "git-repo-go init & sync" '
 	(
 		cd work &&
-		git-repo init -u $manifest_url -g all -b Maint &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url -g all -b Maint &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\", \"version\":2}"
@@ -27,7 +27,7 @@ test_expect_success "git-repo init & sync" '
 test_expect_success "create commits" '
 	(
 		cd work &&
-		git repo start --all my/topic1 &&
+		git repo-go start --all my/topic1 &&
 		test_tick &&
 		(
 			cd main &&
@@ -49,7 +49,7 @@ test_expect_success "create commits" '
 test_expect_success "edit script for multiple uploadable branches" '
 	(
 		cd work &&
-		test_must_fail git-repo upload \
+		test_must_fail git-repo-go upload \
 			-v \
 			--assume-no \
 			--no-edit \
@@ -81,7 +81,7 @@ test_expect_success "edit script for multiple uploadable branches" '
 test_expect_success "upload with args: project1" '
 	(
 		cd work &&
-		test_must_fail git-repo upload \
+		test_must_fail git-repo-go upload \
 			-v \
 			--assume-no \
 			--no-edit \
@@ -107,7 +107,7 @@ test_expect_success "upload with args: project1" '
 test_expect_success "upload with args: projects/app1" '
 	(
 		cd work &&
-		test_must_fail git-repo upload \
+		test_must_fail git-repo-go upload \
 			-v \
 			--assume-no \
 			--no-edit \
@@ -135,7 +135,7 @@ test_expect_success "upload with args: app1" '
 		cd work &&
 		(
 			cd projects &&
-			test_must_fail git-repo upload \
+			test_must_fail git-repo-go upload \
 				-v \
 				--assume-no \
 				--no-edit \
@@ -164,7 +164,7 @@ test_expect_success "upload with args: ." '
 		cd work &&
 		(
 			cd projects/app1 &&
-			test_must_fail git-repo upload \
+			test_must_fail git-repo-go upload \
 				-v \
 				--assume-no \
 				--no-edit \
@@ -232,7 +232,7 @@ test_expect_success "upload with args: main, projects/app1" '
 
 		FATAL: nothing uncommented for upload
 		EOF
-		test_must_fail git-repo upload \
+		test_must_fail git-repo-go upload \
 			-v \
 			--assume-no \
 			--mock-no-tty \
@@ -262,7 +262,7 @@ test_expect_success "upload with args: main, projects/app1" '
 		#         <hash>
 		FATAL: nothing uncommented for upload
 		EOF
-		test_must_fail git-repo upload \
+		test_must_fail git-repo-go upload \
 			-v \
 			--assume-no \
 			--mock-no-tty \
@@ -322,7 +322,7 @@ test_expect_success "upload with args: main, projects/app1" '
 test_expect_success "create commits" '
 	(
 		cd work &&
-		git repo start --all my/topic1 &&
+		git repo-go start --all my/topic1 &&
 		(
 			cd projects/app1 &&
 			for i in $(test_seq 1 5)
@@ -352,13 +352,13 @@ test_expect_success "if has many commits, must confirm before upload" '
 		YOU PROBABLY DO NOT MEAN TO DO THIS. (Did you rebase across branches?)
 		If you are sure you intend to do this, type '"'"'yes'"'"': Yes
 		NOTE: projects/app1> will execute command: git push ssh://git@ssh.example.com/project1.git refs/heads/my/topic1:refs/for/Maint/my/topic1
-		NOTE: projects/app1> with extra environment: AGIT_FLOW=git-repo/n.n.n.n
+		NOTE: projects/app1> with extra environment: AGIT_FLOW=git-repo-go/n.n.n.n
 		NOTE: projects/app1> with extra environment: GIT_SSH_COMMAND=ssh -o SendEnv=AGIT_FLOW
 		
 		----------------------------------------------------------------------
 		EOF
 		(
-			git-repo upload \
+			git-repo-go upload \
 				-v \
 				--assume-yes \
 				--no-edit \
@@ -370,7 +370,7 @@ test_expect_success "if has many commits, must confirm before upload" '
 				projects/app1 \
 				2>&1
 		) >out &&
-		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" <out >actual &&
+		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" <out >actual &&
 		test_cmp expect actual
 	)
 '

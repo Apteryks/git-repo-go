@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="test 'git-repo list'"
+test_description="test 'git-repo-go list'"
 
 . lib/test-lib.sh
 
@@ -13,18 +13,18 @@ test_expect_success "setup" '
 	mkdir work &&
 	(
 		cd work &&
-		git-repo init -u $manifest_url -g app -b Maint &&
-		git-repo sync \
+		git-repo-go init -u $manifest_url -g app -b Maint &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
 	)
 '
 
-test_expect_success "git repo manifest: show manifest of Maint branch" '
+test_expect_success "git repo-go manifest: show manifest of Maint branch" '
 	(
 		cd work &&
-		git-repo manifest
+		git-repo-go manifest
 	) >actual &&
 	cat >expect<<-EOF &&
 	<manifest>
@@ -45,15 +45,15 @@ test_expect_success "git repo manifest: show manifest of Maint branch" '
 	test_cmp expect actual
 '
 
-test_expect_success "git repo manifest: freeze manifest with partial sync" '
+test_expect_success "git repo-go manifest: freeze manifest with partial sync" '
 	(
 		cd work &&
-		git-repo manifest -r
+		git-repo-go manifest -r
 	) 2>&1 | sed -e "s/\/.*\/trash directory.t1102-manifest-on-partial-sync/.../g" >actual &&
 	cat >expect<<-EOF &&
-	ERROR: cannot open git repo '"'"'.../work/.repo/projects/drivers/driver-1.git'"'"': repository does not exist
+	ERROR: cannot open git repository '"'"'.../work/.repo/projects/drivers/driver-1.git'"'"': repository does not exist
 	WARNING: repository for drivers/driver1 is missing, fail to parse HEAD
-	ERROR: cannot open git repo '"'"'.../work/.repo/projects/drivers/driver-2.git'"'"': repository does not exist
+	ERROR: cannot open git repository '"'"'.../work/.repo/projects/drivers/driver-2.git'"'"': repository does not exist
 	WARNING: repository for drivers/driver2 is missing, fail to parse HEAD
 	<manifest>
 	  <remote name="aone" alias="origin" fetch="." review="https://example.com"></remote>
@@ -73,15 +73,15 @@ test_expect_success "git repo manifest: freeze manifest with partial sync" '
 	test_cmp expect actual
 '
 
-test_expect_success "git repo manifest: freeze manifest with partial sync, --suppress-upstream-revision" '
+test_expect_success "git repo-go manifest: freeze manifest with partial sync, --suppress-upstream-revision" '
 	(
 		cd work &&
-		git-repo manifest -r --suppress-upstream-revision
+		git-repo-go manifest -r --suppress-upstream-revision
 	) 2>&1 | sed -e "s/\/.*\/trash directory.t1102-manifest-on-partial-sync/.../g" >actual &&
 	cat >expect<<-EOF &&
-	ERROR: cannot open git repo '"'"'.../work/.repo/projects/drivers/driver-1.git'"'"': repository does not exist
+	ERROR: cannot open git repository '"'"'.../work/.repo/projects/drivers/driver-1.git'"'"': repository does not exist
 	WARNING: repository for drivers/driver1 is missing, fail to parse HEAD
-	ERROR: cannot open git repo '"'"'.../work/.repo/projects/drivers/driver-2.git'"'"': repository does not exist
+	ERROR: cannot open git repository '"'"'.../work/.repo/projects/drivers/driver-2.git'"'"': repository does not exist
 	WARNING: repository for drivers/driver2 is missing, fail to parse HEAD
 	<manifest>
 	  <remote name="aone" alias="origin" fetch="." review="https://example.com"></remote>

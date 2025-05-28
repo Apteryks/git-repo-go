@@ -1,6 +1,6 @@
 #!/bin/sh
 
-test_description="test 'git-repo prune'"
+test_description="test 'git-repo-go prune'"
 
 . lib/test-lib.sh
 
@@ -13,8 +13,8 @@ test_expect_success "setup" '
 	mkdir work &&
 	(
 		cd work &&
-		git-repo init -g all -u $manifest_url &&
-		git-repo sync \
+		git-repo-go init -g all -u $manifest_url &&
+		git-repo-go sync \
 			--mock-ssh-info-status 200 \
 			--mock-ssh-info-response \
 			"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\"}"
@@ -24,8 +24,8 @@ test_expect_success "setup" '
 test_expect_success "create branches" '
 	(
 		cd work &&
-		git-repo start --all jx/topic1 &&
-		git-repo start --all jx/topic2 &&
+		git-repo-go start --all jx/topic1 &&
+		git-repo-go start --all jx/topic2 &&
 		(
 			cd drivers/driver-1 &&
 			test_tick &&
@@ -53,8 +53,8 @@ test_expect_success "create branches" '
 test_expect_success "create branches and dirty worktree" '
 	(
 		cd work &&
-		git-repo start --all jx/topic3 &&
-		git-repo start --all jx/topic4 &&
+		git-repo-go start --all jx/topic3 &&
+		git-repo-go start --all jx/topic4 &&
 		(
 			cd drivers/driver-1 &&
 			echo hack >>README.md &&
@@ -91,10 +91,10 @@ test_expect_success "create branches and dirty worktree" '
 #  * drivers/driver-1: README.md (M)
 #  * drivers/driver-2: (Detached) new-commit, and README.md (M)
 #
-test_expect_success "git-repo prune all" '
+test_expect_success "git-repo-go prune all" '
 	(
 		cd work &&
-		git-repo prune
+		git-repo-go prune
 	) >actual 2>&1 &&
 	cat >expect<<-EOF &&
 	Pruned branches (already merged)
@@ -139,10 +139,10 @@ test_expect_success "git-repo prune all" '
 	test_cmp expect actual
 '
 
-test_expect_success "git-repo prune some projects" '
+test_expect_success "git-repo-go prune some projects" '
 	(
 		cd work &&
-		git-repo prune main drivers/driver-1 projects/app1
+		git-repo-go prune main drivers/driver-1 projects/app1
 	) >actual 2>&1 &&
 	cat >expect<<-EOF &&
 	Pending branches (which have unmerged commits, leave it as is)

@@ -33,7 +33,7 @@ var versionCmd = &cobra.Command{
 }
 
 func showVersion() {
-	fmt.Printf("git-repo version %s\n", version.GetVersion())
+	fmt.Printf("git-repo-go version %s\n", version.GetVersion())
 	fmt.Printf("git version %s\n", version.GetGitVersion())
 }
 

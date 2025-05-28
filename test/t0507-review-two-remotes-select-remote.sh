@@ -17,10 +17,10 @@ test_expect_success "setup" '
 '
 
 test_expect_success "install git review aliases command" '
-	git-repo version &&
+	git-repo-go version &&
 	git config alias.pr >>actual &&
 	cat >expect <<-EOF &&
-	repo upload --single
+	repo-go upload --single
 	EOF
 	test_cmp expect actual
 '
@@ -79,7 +79,7 @@ test_expect_success "upload --remote 1st --dest <branch>" '
 		         <hash>
 		to https://example.com (y/N)? Yes
 		NOTE: will execute command: git push ssh://git@ssh.example.com/jiangxin/main.git refs/heads/jx/topic1:refs/for/master/jx/topic1
-		NOTE: with extra environment: AGIT_FLOW=git-repo/n.n.n.n
+		NOTE: with extra environment: AGIT_FLOW=git-repo-go/n.n.n.n
 		NOTE: with extra environment: GIT_SSH_COMMAND=ssh -o SendEnv=AGIT_FLOW
 		NOTE: will update-ref refs/published/jx/topic1 on refs/heads/jx/topic1, reason: review from jx/topic1 to master on https://example.com
 		
@@ -96,7 +96,7 @@ test_expect_success "upload --remote 1st --dest <branch>" '
 				"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\", \"version\":2}"
 
 		) >out 2>&1 &&
-		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" <out >actual &&
+		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" <out >actual &&
 		test_cmp expect actual
 	)
 '
@@ -117,7 +117,7 @@ test_expect_success "upload --remote 1st --br <branch> --dest <branch>" '
 		         <hash>
 		to https://example.com (y/N)? Yes
 		NOTE: will execute command: git push ssh://git@ssh.example.com/jiangxin/main.git refs/heads/jx/topic1:refs/for/master/jx/topic1
-		NOTE: with extra environment: AGIT_FLOW=git-repo/n.n.n.n
+		NOTE: with extra environment: AGIT_FLOW=git-repo-go/n.n.n.n
 		NOTE: with extra environment: GIT_SSH_COMMAND=ssh -o SendEnv=AGIT_FLOW
 		NOTE: will update-ref refs/published/jx/topic1 on refs/heads/jx/topic1, reason: review from jx/topic1 to master on https://example.com
 		
@@ -134,7 +134,7 @@ test_expect_success "upload --remote 1st --br <branch> --dest <branch>" '
 				"{\"host\":\"ssh.example.com\", \"port\":22, \"type\":\"agit\", \"version\":2}"
 
 		) >out 2>&1 &&
-		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo\/[^ \"\\]*/git-repo\/n.n.n.n/g" <out >actual &&
+		sed -e "s/[0-9a-f]\{40\}/<hash>/g" -e "s/git-repo-go\/[^ \"\\]*/git-repo-go\/n.n.n.n/g" <out >actual &&
 		test_cmp expect actual
 	)
 '
