@@ -131,14 +131,14 @@ prepend_var UBSAN_OPTIONS : $GIT_SAN_OPTIONS
 export UBSAN_OPTIONS
 
 # Default path for tools
-: "${SHELL_PATH:=/bin/sh}"
-: "${TEST_SHELL_PATH:=/bin/sh}"
-: "${PERL_PATH:=/usr/bin/perl}"
+: "${SHELL_PATH:=sh}"
+: "${TEST_SHELL_PATH:=sh}"
+: "${PERL_PATH:=perl}"
 : "${DIFF:=diff}"
 
 export PERL_PATH SHELL_PATH
 
-: "${PYTHON_PATH:=$(which python)}"
+: "${PYTHON_PATH:=$(command -v python)}"
 export PYTHON_PATH
 
 # In t0000, we need to override test directories of nested testcases. In case

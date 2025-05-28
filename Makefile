@@ -41,7 +41,7 @@ all: $(TARGETS)
 
 REPO-VERSION-FILE: FORCE
 	$(call message,Generate version file)
-	@/bin/sh ./REPO-VERSION-GEN
+	@sh REPO-VERSION-GEN
 -include REPO-VERSION-FILE
 
 # Define LDFLAGS after include of REPO-VERSION-FILE
