@@ -1,0 +1,35 @@
+# Builds git-repo-go in a GNU Guix controlled environment.
+name: ci
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install GNU Guix
+      uses: PromyLOPh/guix-install-action@v1.6
+      with:
+        pullAfterInstall: false
+
+    - name: Prepare environment
+      run: guix shell --pure -m manifest.scm -- echo
+
+    - name: Build with Make
+      run: guix shell --pure -m manifest.scm -- make -j$(nproc)
+
+    - name: Run unit tests suite
+      run: guix shell --pure -m manifest.scm -- make ut -j$(nproc)
+
+    - name: Run integration test suite
+      # Do not run integration tests in parallel, which causes failure
+      # (see issue #1).
+      run: >-
+        guix shell --pure -m manifest.scm --
+        env GIT_TEST_OPTS=--verbose make it
