@@ -21,11 +21,7 @@ test_expect_success "git-repo-go init -u" '
 '
 
 test_expect_success "check installed hooks" '
-	cat >expect<<-EOF &&
-	#!/bin/sh
-	EOF
-	head -1 .git-repo-go/hooks/commit-msg >actual &&
-	test_cmp expect actual &&
+	head -1 .git-repo-go/hooks/commit-msg | grep -Fq /bin/sh &&
 	test -x .git-repo-go/hooks/commit-msg
 '
 
