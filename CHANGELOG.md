@@ -2,11 +2,14 @@
 
 Changes of git-repo-go.
 
-## 0.9.0 (2025-05-28)
+## 1.0.0 (2025-05-29)
 
 * Remove deprecated uses of ioutils module
 * Complete renaming of git-repo to git-repo-go, fixing git aliases
 * Bump go-git dependency to v5 to fix GO-2024-2456 vulnerability
+* Portability improvements
+* Fix integration tests suite
+* Add a new Guix-based CI runner
 
 ## 0.7.8 (2021-11-19)
 
