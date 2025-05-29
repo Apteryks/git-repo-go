@@ -18,13 +18,22 @@ and other agit-flow alike protocols...
 
 Download or compile the binary of `git-repo-go` from this repository,
 and install (copy) the executable of `git-repo-go` to proper location,
-such as `/usr/bin` of Linux and MacOS, and `C:\Windows\system32` of
+such as `/usr/bin` of GNU/Linux and MacOS, and `C:\Windows\system32` of
 Windows.
 
 After installation, execute the following command to validate the installation:
 
     git repo-go version
 
+### Using GNU Guix
+
+`git-repo-go` can be installed via the [GNU
+Guix](https://guix.gnu.org/) package manager, which is can be
+installed on top of most GNU/Linux distributions:
+
+```
+guix install git-repo-go
+```
 
 ## Git aliases installed from git-repo-go
 
