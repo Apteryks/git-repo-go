@@ -25,6 +25,10 @@ import (
 // Proto types
 const (
 	ProtoTypeAGit   = "agit"
+	// TODO: Remove "gitea" after
+	// <https://codeberg.org/forgejo/forgejo/issues/8024> is
+	// deployed.
+	ProtoTypeGitea  = "gitea"
 	ProtoTypeGerrit = "gerrit"
 )
 
@@ -51,6 +55,8 @@ func NewProtoHelper(sshInfo *SSHInfo) ProtoHelper {
 		return NewAGitProtoHelper(sshInfo)
 	case ProtoTypeGerrit:
 		return NewGerritProtoHelper(sshInfo)
+	case ProtoTypeGitea:
+		return NewAGitProtoHelper(sshInfo)
 	case "":
 		return NewDefaultProtoHelper(sshInfo)
 	}
